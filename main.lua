@@ -9,6 +9,7 @@ local SpeedInput = Instance.new("TextBox")
 local FlyToggle = Instance.new("TextButton")
 local NoclipToggle = Instance.new("TextButton")
 local TPToggle = Instance.new("TextButton")
+local ToolBtn = Instance.new("TextButton")
 local MinBtn = Instance.new("TextButton")
 
 ScreenGui.Parent = game:GetService("CoreGui") or game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
@@ -18,7 +19,7 @@ MainFrame.Name = "ShaikhulovHUB"
 MainFrame.Parent = ScreenGui
 MainFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 25)
 MainFrame.Position = UDim2.new(0.5, -110, 0.4, -155)
-MainFrame.Size = UDim2.new(0, 220, 0, 430)
+MainFrame.Size = UDim2.new(0, 220, 0, 470)
 MainFrame.Active = true
 MainFrame.Draggable = true
 
@@ -42,7 +43,7 @@ MinBtn.Font = Enum.Font.SourceSansBold
 ControlFrame.Parent = MainFrame
 ControlFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 30)
 ControlFrame.Position = UDim2.new(0.05, 0, 0, 45)
-ControlFrame.Size = UDim2.new(0, 200, 0, 170)
+ControlFrame.Size = UDim2.new(0, 200, 0, 210)
 
 local isSpeedEnabled, isFlyEnabled, isNoclipEnabled, isTPEnabled, isMinimized = false, false, false, false, false
 local currentSpeedValue, flySpeed = 100, 50
@@ -94,9 +95,18 @@ TPToggle.TextColor3 = Color3.fromRGB(255, 255, 255)
 TPToggle.TextSize = 12
 TPToggle.Font = Enum.Font.SourceSansBold
 
+ToolBtn.Parent = ControlFrame
+ToolBtn.Position = UDim2.new(0, 0, 0, 165)
+ToolBtn.Size = UDim2.new(1, 0, 0, 35)
+ToolBtn.BackgroundColor3 = Color3.fromRGB(70, 35, 120)
+ToolBtn.Text = "Give All Tools 🎒"
+ToolBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToolBtn.TextSize = 12
+ToolBtn.Font = Enum.Font.SourceSansBold
+
 ScrollingFrame.Parent = MainFrame
 ScrollingFrame.BackgroundTransparency = 1
-ScrollingFrame.Position = UDim2.new(0.05, 0, 0, 225)
+ScrollingFrame.Position = UDim2.new(0.05, 0, 0, 265)
 ScrollingFrame.Size = UDim2.new(0, 200, 0, 190)
 ScrollingFrame.CanvasSize = UDim2.new(0, 0, 0, 0)
 ScrollingFrame.ScrollBarThickness = 4
@@ -107,7 +117,7 @@ UIListLayout.Padding = UDim.new(0, 5)
 
 MinBtn.MouseButton1Click:Connect(function()
     isMinimized = not isMinimized
-    MainFrame.Size = isMinimized and UDim2.new(0, 220, 0, 35) or UDim2.new(0, 220, 0, 430)
+    MainFrame.Size = isMinimized and UDim2.new(0, 220, 0, 35) or UDim2.new(0, 220, 0, 470)
     ControlFrame.Visible = not isMinimized
     ScrollingFrame.Visible = not isMinimized
     MinBtn.Text = isMinimized and "[+]" or "[-]"
@@ -161,6 +171,21 @@ TPToggle.MouseButton1Click:Connect(function()
     TPToggle.BackgroundColor3 = isTPEnabled and Color3.fromRGB(40, 140, 40) or Color3.fromRGB(45, 45, 50)
 end)
 
+ToolBtn.MouseButton1Click:Connect(function()
+    local bp = player:FindFirstChild("Backpack")
+    if bp then
+        local storageSources = {game:GetService("ReplicatedStorage"), game:GetService("Lighting")}
+        for _, source in pairs(storageSources) do
+            for _, obj in pairs(source:GetDescendants()) do
+                if obj:IsA("Tool") or obj:IsA("HopperBin") then
+                    local clone = obj:Clone()
+                    clone.Parent = bp
+                end
+            end
+        end
+    end
+end)
+
 mouse.Button1Down:Connect(function()
     local hrp = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
     if isTPEnabled and hrp and mouse.Target then
@@ -182,7 +207,7 @@ game:GetService("RunService").Heartbeat:Connect(function()
         end
     end
 end)
-
+_G.HubSF = ScrollingFrame
 local function flingPlayer(target)
     local char = player.Character
     local hrp = char and char:FindFirstChild("HumanoidRootPart")
@@ -190,7 +215,7 @@ local function flingPlayer(target)
     local tHrp = target.Character and target.Character:FindFirstChild("HumanoidRootPart")
     if not hrp or not hum or not tHrp then return end
     local oldCFrame = hrp.CFrame
-    oldState = hum:GetState()
+    local oldState = hum:GetState()
     hum:ChangeState(Enum.HumanoidStateType.Physics)
     for _, part in pairs(char:GetChildren()) do
         if part:IsA("BasePart") then part.CanCollide = false end
@@ -214,6 +239,8 @@ local function flingPlayer(target)
 end
 
 local function updatePlayerList()
+    local ScrollingFrame = _G.HubSF
+    if not ScrollingFrame then return end
     for _, child in pairs(ScrollingFrame:GetChildren()) do
         if child:IsA("TextButton") then child:Destroy() end
     end
@@ -237,7 +264,7 @@ local function updatePlayerList()
             end)
         end
     end
-    ScrollingFrame.CanvasSize = UDim2.new(0, 0, 0, UIListLayout.AbsoluteContentSize.Y)
+    ScrollingFrame.CanvasSize = UDim2.new(0, 0, 0, ScrollingFrame.UIListLayout.AbsoluteContentSize.Y)
 end
 
 updatePlayerList()
