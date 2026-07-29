@@ -16,26 +16,28 @@ ScreenGui.Parent = game:GetService("CoreGui") or game:GetService("Players").Loca
 ScreenGui.ResetOnSpawn = false
 ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
+-- Оптимизация под A16: масштабирование под плотность пикселей
+local scale = 1 -- можно 1.1 для чуть крупнее, 0.9 для мельче
+
 MainFrame.Name = "ShaikhulovHUB"
 MainFrame.Parent = ScreenGui
 MainFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 25)
--- Центрируем и делаем почти квадратным: 280x420
-MainFrame.Position = UDim2.new(0.5, -140, 0.4, -210)
-MainFrame.Size = UDim2.new(0, 280, 0, 420)
+MainFrame.Position = UDim2.new(0.5, -115, 0.35, -125)
+MainFrame.Size = UDim2.new(0, 230 * scale, 0, 250 * scale)
 MainFrame.Active = true
 MainFrame.Draggable = true
 
 Title.Parent = MainFrame
 Title.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
-Title.Size = UDim2.new(0, 230, 0, 35)
+Title.Size = UDim2.new(0, 185, 0, 24)
 Title.Text = "🎯ShaikhulovHUB🎯"
 Title.TextColor3 = Color3.fromRGB(255, 60, 60)
-Title.TextSize = 13
+Title.TextSize = 12
 Title.Font = Enum.Font.SourceSansBold
 
 MinBtn.Parent = MainFrame
-MinBtn.Position = UDim2.new(0, 230, 0, 0)
-MinBtn.Size = UDim2.new(0, 50, 0, 35)
+MinBtn.Position = UDim2.new(0, 185, 0, 0)
+MinBtn.Size = UDim2.new(0, 45, 0, 24)
 MinBtn.BackgroundColor3 = Color3.fromRGB(25, 25, 30)
 MinBtn.Text = "[-]"
 MinBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -44,8 +46,8 @@ MinBtn.Font = Enum.Font.SourceSansBold
 
 ControlFrame.Parent = MainFrame
 ControlFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 30)
-ControlFrame.Position = UDim2.new(0.05, 0, 0, 45)
-ControlFrame.Size = UDim2.new(0, 252, 0, 180) -- чуть шире и ниже
+ControlFrame.Position = UDim2.new(0.05, 0, 0, 32)
+ControlFrame.Size = UDim2.new(0, 207, 0, 130)
 
 local isSpeedEnabled, isFlyEnabled, isNoclipEnabled, isTPEnabled, isMinimized = false, false, false, false, false
 local currentSpeedValue, flySpeed = 100, 50
@@ -54,72 +56,72 @@ local mouse = player:GetMouse()
 
 SpeedToggle.Parent = ControlFrame
 SpeedToggle.Position = UDim2.new(0, 0, 0, 0)
-SpeedToggle.Size = UDim2.new(0, 140, 0, 38)
+SpeedToggle.Size = UDim2.new(0, 115, 0, 28)
 SpeedToggle.BackgroundColor3 = Color3.fromRGB(45, 45, 50)
 SpeedToggle.Text = "Speed: OFF"
 SpeedToggle.TextColor3 = Color3.fromRGB(255, 255, 255)
-SpeedToggle.TextSize = 13
+SpeedToggle.TextSize = 12
 SpeedToggle.Font = Enum.Font.SourceSansBold
 
 SpeedInput.Parent = ControlFrame
-SpeedInput.Position = UDim2.new(0, 145, 0, 0)
-SpeedInput.Size = UDim2.new(0, 107, 0, 38)
+SpeedInput.Position = UDim2.new(0, 120, 0, 0)
+SpeedInput.Size = UDim2.new(0, 87, 0, 28)
 SpeedInput.BackgroundColor3 = Color3.fromRGB(35, 35, 40)
 SpeedInput.Text = "100"
 SpeedInput.TextColor3 = Color3.fromRGB(255, 255, 255)
-SpeedInput.TextSize = 13
+SpeedInput.TextSize = 12
 SpeedInput.Font = Enum.Font.SourceSans
 
 FlyToggle.Parent = ControlFrame
-FlyToggle.Position = UDim2.new(0, 0, 0, 43)
-FlyToggle.Size = UDim2.new(1, 0, 0, 38)
+FlyToggle.Position = UDim2.new(0, 0, 0, 31)
+FlyToggle.Size = UDim2.new(1, 0, 0, 28)
 FlyToggle.BackgroundColor3 = Color3.fromRGB(45, 45, 50)
 FlyToggle.Text = "Fly: OFF"
 FlyToggle.TextColor3 = Color3.fromRGB(255, 255, 255)
-FlyToggle.TextSize = 13
+FlyToggle.TextSize = 12
 FlyToggle.Font = Enum.Font.SourceSansBold
 
 NoclipToggle.Parent = ControlFrame
-NoclipToggle.Position = UDim2.new(0, 0, 0, 86)
-NoclipToggle.Size = UDim2.new(1, 0, 0, 38)
+NoclipToggle.Position = UDim2.new(0, 0, 0, 62)
+NoclipToggle.Size = UDim2.new(1, 0, 0, 28)
 NoclipToggle.BackgroundColor3 = Color3.fromRGB(45, 45, 50)
 NoclipToggle.Text = "Noclip: OFF"
 NoclipToggle.TextColor3 = Color3.fromRGB(255, 255, 255)
-NoclipToggle.TextSize = 13
+NoclipToggle.TextSize = 12
 NoclipToggle.Font = Enum.Font.SourceSansBold
 
 TPToggle.Parent = ControlFrame
-TPToggle.Position = UDim2.new(0, 0, 0, 129)
-TPToggle.Size = UDim2.new(1, 0, 0, 38)
+TPToggle.Position = UDim2.new(0, 0, 0, 93)
+TPToggle.Size = UDim2.new(1, 0, 0, 28)
 TPToggle.BackgroundColor3 = Color3.fromRGB(45, 45, 50)
 TPToggle.Text = "Click TP: OFF"
 TPToggle.TextColor3 = Color3.fromRGB(255, 255, 255)
-TPToggle.TextSize = 13
+TPToggle.TextSize = 12
 TPToggle.Font = Enum.Font.SourceSansBold
 
 ToolBtn.Parent = MainFrame
-ToolBtn.Position = UDim2.new(0.05, 0, 0, 230)
-ToolBtn.Size = UDim2.new(0, 252, 0, 40)
+ToolBtn.Position = UDim2.new(0.05, 0, 0, 168)
+ToolBtn.Size = UDim2.new(0, 207, 0, 30)
 ToolBtn.BackgroundColor3 = Color3.fromRGB(70, 35, 120)
 ToolBtn.Text = "Give All Tools 🎒"
 ToolBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-ToolBtn.TextSize = 13
+ToolBtn.TextSize = 12
 ToolBtn.Font = Enum.Font.SourceSansBold
 
 ScrollingFrame.Parent = MainFrame
 ScrollingFrame.BackgroundTransparency = 1
-ScrollingFrame.Position = UDim2.new(0.05, 0, 0, 278)
-ScrollingFrame.Size = UDim2.new(0, 252, 0, 130)
+ScrollingFrame.Position = UDim2.new(0.05, 0, 0, 202)
+ScrollingFrame.Size = UDim2.new(0, 207, 0, 40)
 ScrollingFrame.CanvasSize = UDim2.new(0, 0, 0, 0)
-ScrollingFrame.ScrollBarThickness = 5
+ScrollingFrame.ScrollBarThickness = 4
 
 UIListLayout.Parent = ScrollingFrame
 UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
-UIListLayout.Padding = UDim.new(0, 4)
+UIListLayout.Padding = UDim.new(0, 2)
 
 MinBtn.MouseButton1Click:Connect(function()
     isMinimized = not isMinimized
-    MainFrame.Size = isMinimized and UDim2.new(0, 280, 0, 35) or UDim2.new(0, 280, 0, 420)
+    MainFrame.Size = isMinimized and UDim2.new(0, 230, 0, 24) or UDim2.new(0, 230, 0, 250)
     ControlFrame.Visible = not isMinimized
     ScrollingFrame.Visible = not isMinimized
     ToolBtn.Visible = not isMinimized
@@ -253,11 +255,11 @@ local function updatePlayerList()
         if p ~= player then
             local pBtn = Instance.new("TextButton")
             pBtn.Parent = ScrollingFrame
-            pBtn.Size = UDim2.new(1, 0, 0, 32)
+            pBtn.Size = UDim2.new(1, 0, 0, 26)
             pBtn.BackgroundColor3 = Color3.fromRGB(40, 40, 45)
             pBtn.Text = p.DisplayName .. " (@" .. p.Name .. ")"
             pBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-            pBtn.TextSize = 12
+            pBtn.TextSize = 11
             pBtn.Font = Enum.Font.SourceSans
             pBtn.MouseButton1Click:Connect(function()
                 pBtn.BackgroundColor3 = Color3.fromRGB(180, 40, 40)
