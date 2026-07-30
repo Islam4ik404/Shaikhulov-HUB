@@ -1,0 +1,1432 @@
+-- ╔══════════════════════════════════════════════╗
+-- ║   SHAIKHULOV HUB  v3.1  — YZHE_STARUY      ║
+-- ║   Mobile Edition  |  Samsung A16 Ready      ║
+-- ╚══════════════════════════════════════════════╝
+
+local VALID_KEY = "ISLAM4IK"
+local keyAccepted = false
+
+-- ═══════════════════════ KEY SYSTEM ════════════════════════
+
+local KeyGui = Instance.new("ScreenGui")
+KeyGui.Name = "ShaikhulovKey"
+KeyGui.Parent = game.CoreGui
+KeyGui.ResetOnSpawn = false
+KeyGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+KeyGui.DisplayOrder = 100
+
+local Overlay = Instance.new("Frame")
+Overlay.Size = UDim2.new(1,0,1,0)
+Overlay.BackgroundColor3 = Color3.fromRGB(0,0,10)
+Overlay.BackgroundTransparency = 0.25
+Overlay.ZIndex = 1
+Overlay.Parent = KeyGui
+
+local KF = Instance.new("Frame")
+KF.Size = UDim2.new(0,320,0,280)
+KF.Position = UDim2.new(0.5,-160,0.5,-140)
+KF.BackgroundColor3 = Color3.fromRGB(8,12,28)
+KF.BorderSizePixel = 0
+KF.ZIndex = 2
+KF.Parent = KeyGui
+Instance.new("UICorner",KF).CornerRadius = UDim.new(0,16)
+local KFS = Instance.new("UIStroke",KF)
+KFS.Color = Color3.fromRGB(0,120,255); KFS.Thickness = 1.5
+
+local KHeader = Instance.new("Frame")
+KHeader.Size = UDim2.new(1,0,0,54)
+KHeader.BackgroundColor3 = Color3.fromRGB(0,60,160)
+KHeader.ZIndex = 3
+KHeader.Parent = KF
+Instance.new("UICorner",KHeader).CornerRadius = UDim.new(0,16)
+local KHG = Instance.new("UIGradient",KHeader)
+KHG.Color = ColorSequence.new({ColorSequenceKeypoint.new(0,Color3.fromRGB(0,100,220)),ColorSequenceKeypoint.new(1,Color3.fromRGB(0,40,130))})
+KHG.Rotation = 90
+
+local KTitle = Instance.new("TextLabel")
+KTitle.Size = UDim2.new(1,0,0,30); KTitle.Position = UDim2.new(0,0,0,4)
+KTitle.Text = "🔷  SHAIKHULOV HUB"
+KTitle.TextColor3 = Color3.fromRGB(255,255,255); KTitle.BackgroundTransparency = 1
+KTitle.Font = Enum.Font.GothamBold; KTitle.TextSize = 18; KTitle.ZIndex = 4; KTitle.Parent = KHeader
+
+local KSubtitle = Instance.new("TextLabel")
+KSubtitle.Size = UDim2.new(1,0,0,18); KSubtitle.Position = UDim2.new(0,0,0,32)
+KSubtitle.Text = "by YZHE_STARUY  •  Введите ключ доступа"
+KSubtitle.TextColor3 = Color3.fromRGB(150,190,255); KSubtitle.BackgroundTransparency = 1
+KSubtitle.Font = Enum.Font.Gotham; KSubtitle.TextSize = 10; KSubtitle.ZIndex = 4; KSubtitle.Parent = KHeader
+
+local KInput = Instance.new("TextBox")
+KInput.Size = UDim2.new(0.88,0,0,44); KInput.Position = UDim2.new(0.06,0,0,66)
+KInput.PlaceholderText = "  Введите ключ..."; KInput.Text = ""
+KInput.TextColor3 = Color3.fromRGB(255,255,255); KInput.PlaceholderColor3 = Color3.fromRGB(80,100,150)
+KInput.BackgroundColor3 = Color3.fromRGB(14,20,50); KInput.Font = Enum.Font.GothamBold
+KInput.TextSize = 14; KInput.ZIndex = 3; KInput.ClearTextOnFocus = false; KInput.Parent = KF
+Instance.new("UICorner",KInput).CornerRadius = UDim.new(0,10)
+local KIS = Instance.new("UIStroke",KInput); KIS.Color = Color3.fromRGB(0,80,180); KIS.Thickness = 1
+
+local KStatus = Instance.new("TextLabel")
+KStatus.Size = UDim2.new(1,0,0,20); KStatus.Position = UDim2.new(0,0,0,116)
+KStatus.Text = ""; KStatus.TextColor3 = Color3.fromRGB(255,255,255); KStatus.BackgroundTransparency = 1
+KStatus.Font = Enum.Font.GothamBold; KStatus.TextSize = 12; KStatus.ZIndex = 3; KStatus.Parent = KF
+
+local KCheck = Instance.new("TextButton")
+KCheck.Size = UDim2.new(0.88,0,0,44); KCheck.Position = UDim2.new(0.06,0,0,140)
+KCheck.Text = "🔓   ВОЙТИ"; KCheck.TextColor3 = Color3.fromRGB(255,255,255)
+KCheck.BackgroundColor3 = Color3.fromRGB(0,120,255); KCheck.Font = Enum.Font.GothamBold
+KCheck.TextSize = 14; KCheck.ZIndex = 3; KCheck.Parent = KF
+Instance.new("UICorner",KCheck).CornerRadius = UDim.new(0,10)
+local KCG = Instance.new("UIGradient",KCheck)
+KCG.Color = ColorSequence.new({ColorSequenceKeypoint.new(0,Color3.fromRGB(30,150,255)),ColorSequenceKeypoint.new(1,Color3.fromRGB(0,80,200))})
+KCG.Rotation = 90
+
+local KGetKey = Instance.new("TextButton")
+KGetKey.Size = UDim2.new(0.88,0,0,38); KGetKey.Position = UDim2.new(0.06,0,0,196)
+KGetKey.Text = "🔑   ПОЛУЧИТЬ КЛЮЧ  →  @ShaikhulovHUB_Bot"
+KGetKey.TextColor3 = Color3.fromRGB(255,200,0); KGetKey.BackgroundColor3 = Color3.fromRGB(30,24,4)
+KGetKey.Font = Enum.Font.GothamBold; KGetKey.TextSize = 11; KGetKey.ZIndex = 3; KGetKey.Parent = KF
+Instance.new("UICorner",KGetKey).CornerRadius = UDim.new(0,10)
+local KGS = Instance.new("UIStroke",KGetKey); KGS.Color = Color3.fromRGB(255,180,0); KGS.Thickness = 1
+
+KCheck.MouseButton1Click:Connect(function()
+    if KInput.Text == VALID_KEY then
+        keyAccepted = true
+        KStatus.Text = "✅  Доступ разрешён! Загрузка..."
+        KStatus.TextColor3 = Color3.fromRGB(0,220,120)
+        task.wait(0.6); KeyGui:Destroy()
+    else
+        KStatus.Text = "❌  Неверный ключ!"; KStatus.TextColor3 = Color3.fromRGB(255,60,60)
+        KIS.Color = Color3.fromRGB(255,60,60); KInput.Text = ""
+        task.delay(1.5, function() KIS.Color = Color3.fromRGB(0,80,180); KStatus.Text = "" end)
+    end
+end)
+
+KGetKey.MouseButton1Click:Connect(function()
+    setclipboard("https://t.me/ShaikhulovHUB_Bot")
+    pcall(function() game:GetService("GuiService"):OpenBrowserWindow("https://t.me/ShaikhulovHUB_Bot") end)
+    KStatus.Text = "📋  Ссылка скопирована!"; KStatus.TextColor3 = Color3.fromRGB(0,220,120)
+    task.delay(2, function() KStatus.Text = "" end)
+end)
+
+repeat task.wait() until keyAccepted
+
+-- ═══════════════════════ SERVICES ═════════════════════════
+
+local player   = game.Players.LocalPlayer
+local camera   = workspace.CurrentCamera
+local mouse    = player:GetMouse()
+local RS       = game:GetService("RunService")
+local UIS      = game:GetService("UserInputService")
+local Players  = game:GetService("Players")
+local TweenSvc = game:GetService("TweenService")
+
+-- ─── Samsung A16: 1080×2340 (393×852 logical in Roblox) ───
+local isMobile = UIS.TouchEnabled and not UIS.KeyboardEnabled
+
+-- Game detection
+local GameMeta = {
+    [142823291] = {name="🔪 Murder Mystery 2", short="MM2"},
+    [537413528] = {name="🚢 Build a Boat",     short="Boat"},
+    [286090429] = {name="🔫 Arsenal",           short="Ars"},
+    [4924922222]= {name="🏠 Brookhaven",        short="Brk"},
+}
+local currentGame = GameMeta[game.PlaceId] or {name="🎮 Игра", short="Game"}
+local isMM2  = (game.PlaceId == 142823291)
+local isBoat = (game.PlaceId == 537413528)
+
+-- Fake ban
+if player.Name == "DRAGON_CAMELoN735" then
+    task.wait(3)
+    local fb = Instance.new("ScreenGui"); fb.Parent = player:WaitForChild("PlayerGui")
+    fb.ResetOnSpawn = false; fb.ZIndexBehavior = Enum.ZIndexBehavior.Sibling; fb.DisplayOrder = 999
+    local bg = Instance.new("Frame"); bg.Size = UDim2.new(1,0,1,0); bg.BackgroundColor3 = Color3.fromRGB(0,0,0); bg.BackgroundTransparency = 0.5; bg.Parent = fb
+    local box = Instance.new("Frame"); box.Size = UDim2.new(0,360,0,230); box.Position = UDim2.new(0.5,-180,0.5,-115); box.BackgroundColor3 = Color3.fromRGB(20,20,25); box.BorderSizePixel = 0; box.Parent = fb
+    Instance.new("UICorner",box).CornerRadius = UDim.new(0,12)
+    local bar = Instance.new("Frame"); bar.Size = UDim2.new(1,0,0,36); bar.BackgroundColor3 = Color3.fromRGB(200,30,30); bar.Parent = box
+    local tt = Instance.new("TextLabel"); tt.Size = UDim2.new(1,-20,1,0); tt.Position = UDim2.new(0,10,0,0); tt.Text = "🚫 ДОСТУП ЗАБЛОКИРОВАН"; tt.TextColor3 = Color3.fromRGB(255,255,255); tt.BackgroundTransparency = 1; tt.Font = Enum.Font.GothamBold; tt.TextSize = 15; tt.Parent = bar
+    local et = Instance.new("TextLabel"); et.Size = UDim2.new(0,320,0,110); et.Position = UDim2.new(0.5,-160,0,55); et.Text = "АККАУНТ ЗАБЛОКИРОВАН\n\n• Причина: Soft Ban\n• Нарушение: Стороннее ПО\n• Блокировка: НАВСЕГДА"; et.TextColor3 = Color3.fromRGB(200,200,200); et.BackgroundTransparency = 1; et.Font = Enum.Font.Gotham; et.TextSize = 13; et.TextXAlignment = Enum.TextXAlignment.Center; et.Parent = box
+    local ok = Instance.new("TextButton"); ok.Size = UDim2.new(0,120,0,35); ok.Position = UDim2.new(0.5,-60,0,180); ok.Text = "ПОНЯТНО"; ok.TextColor3 = Color3.fromRGB(255,255,255); ok.BackgroundColor3 = Color3.fromRGB(200,30,30); ok.Font = Enum.Font.GothamBold; ok.TextSize = 13; ok.Parent = box
+    Instance.new("UICorner",ok).CornerRadius = UDim.new(0,8)
+    ok.MouseButton1Click:Connect(function() player:Kick("Вы забанены. Причина: Soft Ban") end)
+    return
+end
+
+-- ═══════════════════════ COLOR PALETTE ════════════════════
+
+local C = {
+    BG         = Color3.fromRGB(6, 10, 22),
+    Frame      = Color3.fromRGB(10, 16, 36),
+    Frame2     = Color3.fromRGB(15, 22, 50),
+    Frame3     = Color3.fromRGB(22, 32, 68),
+    Accent     = Color3.fromRGB(0, 120, 255),
+    AccentDark = Color3.fromRGB(0, 70, 180),
+    AccentGlow = Color3.fromRGB(0, 90, 200),
+    Green      = Color3.fromRGB(0, 210, 110),
+    GreenDark  = Color3.fromRGB(0, 140, 70),
+    Red        = Color3.fromRGB(255, 55, 55),
+    RedDark    = Color3.fromRGB(160, 20, 20),
+    Gold       = Color3.fromRGB(255, 200, 0),
+    Purple     = Color3.fromRGB(150, 60, 255),
+    White      = Color3.fromRGB(255, 255, 255),
+    Text       = Color3.fromRGB(180, 205, 245),
+    Text2      = Color3.fromRGB(100, 130, 175),
+    MR         = Color3.fromRGB(255, 40, 40),
+    SB         = Color3.fromRGB(40, 120, 255),
+    IW         = Color3.fromRGB(220, 220, 220),
+    Cyan       = Color3.fromRGB(0, 220, 255),
+    CyanDark   = Color3.fromRGB(0, 140, 180),
+    LogoBG     = Color3.fromRGB(12, 22, 52),
+}
+
+-- ═══════════════════════ FEATURE TABLE ════════════════════
+
+local F = {
+    Chams      = {on=true,  fill=false},
+    Aimbot     = {on=false, fov=120, showFov=true, bone="Head"},
+    ESP        = {on=true,  names=true, distance=true},
+    Speed      = {on=false, val=28},
+    Fly        = {on=false, val=50},
+    InfJump    = {on=false},
+    Noclip     = {on=false},
+    ClickTP    = {on=false},
+    RGB        = {on=false},
+    AntiAFK    = {on=false},
+    Fullbright = {on=false},
+    NoFog      = {on=false},
+    Hitbox     = {on=false, size=15},
+    FlingAll   = {on=false},
+    FlingMurder= {on=false},
+    GunTP      = {on=false},
+    KillAura   = {on=false, radius=20},
+    FakeLag    = {on=false},
+    FlingPower = 999999,
+    Target     = nil,
+    Sky        = "default",
+}
+
+-- Mobile fly direction state
+local flyDir = {fwd=false, back=false, left=false, right=false, up=false, down=false}
+
+-- ═══════════════════════ DRAWING (FOV) ════════════════════
+
+local FovCircle = Drawing.new("Circle")
+FovCircle.Color = Color3.fromRGB(0,130,255)
+FovCircle.Thickness = 1.5
+FovCircle.Filled = false
+FovCircle.Radius = F.Aimbot.fov
+FovCircle.Visible = false
+FovCircle.NumSides = 64
+
+local ESPLabels = {}
+
+-- ═══════════════════════ SIZES (Samsung A16) ══════════════
+-- A16: 1080×2340 → ~393×852 logical → GUI safe ~385×830
+-- Main frame: 285px wide, 420px tall fits perfectly
+
+local GW = isMobile and 285 or 310   -- GUI width
+local GH = isMobile and 420 or 440   -- GUI height
+local TS = isMobile and 10  or 11    -- text size standard
+local TS2= isMobile and 9   or 10    -- text size small
+local TS3= isMobile and 8   or 9     -- text size tiny
+local TH = isMobile and 30  or 32    -- toggle height
+local BH = isMobile and 28  or 30    -- button height
+
+-- ═══════════════════════ MAIN GUI ═════════════════════════
+
+local Gui = Instance.new("ScreenGui")
+Gui.Name = "ShaikhulovHUB_v31"
+Gui.Parent = game.CoreGui
+Gui.ResetOnSpawn = false
+Gui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+Gui.IgnoreGuiInset = true
+
+-- ── Main Frame ──
+local Main = Instance.new("Frame")
+Main.Size = UDim2.new(0,GW,0,GH)
+Main.Position = UDim2.new(0.5,-GW/2,0.5,-GH/2)
+Main.BackgroundColor3 = C.BG
+Main.BorderSizePixel = 0
+Main.Active = true
+Main.Draggable = true
+Main.Parent = Gui
+Instance.new("UICorner",Main).CornerRadius = UDim.new(0,14)
+local MS = Instance.new("UIStroke",Main)
+MS.Color = C.Accent; MS.Thickness = 1
+
+-- ── Header ──
+local Header = Instance.new("Frame")
+Header.Size = UDim2.new(1,0,0,46)
+Header.BackgroundColor3 = Color3.fromRGB(0,60,160)
+Header.ZIndex = 2; Header.Parent = Main
+Instance.new("UICorner",Header).CornerRadius = UDim.new(0,14)
+local HG = Instance.new("UIGradient",Header)
+HG.Color = ColorSequence.new({ColorSequenceKeypoint.new(0,Color3.fromRGB(0,100,220)),ColorSequenceKeypoint.new(1,Color3.fromRGB(0,35,110))})
+HG.Rotation = 90
+
+local HIcon = Instance.new("TextLabel")
+HIcon.Size = UDim2.new(0,32,0,32); HIcon.Position = UDim2.new(0,8,0,7)
+HIcon.Text = "💎"; HIcon.TextColor3 = C.White; HIcon.BackgroundTransparency = 1
+HIcon.Font = Enum.Font.GothamBold; HIcon.TextSize = 22; HIcon.ZIndex = 3; HIcon.Parent = Header
+
+local HTitle = Instance.new("TextLabel")
+HTitle.Size = UDim2.new(0,170,0,20); HTitle.Position = UDim2.new(0,44,0,6)
+HTitle.Text = "SHAIKHULOV HUB"; HTitle.TextColor3 = C.White; HTitle.BackgroundTransparency = 1
+HTitle.Font = Enum.Font.GothamBold; HTitle.TextSize = 13
+HTitle.TextXAlignment = Enum.TextXAlignment.Left; HTitle.ZIndex = 3; HTitle.Parent = Header
+
+local HSub = Instance.new("TextLabel")
+HSub.Size = UDim2.new(0,170,0,14); HSub.Position = UDim2.new(0,44,0,27)
+HSub.Text = "by YZHE_STARUY  •  v3.1"; HSub.TextColor3 = Color3.fromRGB(140,185,255)
+HSub.BackgroundTransparency = 1; HSub.Font = Enum.Font.Gotham; HSub.TextSize = 9
+HSub.TextXAlignment = Enum.TextXAlignment.Left; HSub.ZIndex = 3; HSub.Parent = Header
+
+-- ── Minimize button (top-right) ──
+local MinBtn = Instance.new("TextButton")
+MinBtn.Size = UDim2.new(0,28,0,28); MinBtn.Position = UDim2.new(1,-33,0,9)
+MinBtn.Text = "─"; MinBtn.TextColor3 = C.White; MinBtn.BackgroundTransparency = 0.7
+MinBtn.BackgroundColor3 = C.White; MinBtn.Font = Enum.Font.GothamBold; MinBtn.TextSize = 14
+MinBtn.ZIndex = 4; MinBtn.Parent = Header
+Instance.new("UICorner",MinBtn).CornerRadius = UDim.new(0,7)
+
+-- ── Tab Bar ──
+local TabBar = Instance.new("Frame")
+TabBar.Size = UDim2.new(1,-8,0,30)
+TabBar.Position = UDim2.new(0,4,0,49)
+TabBar.BackgroundColor3 = C.Frame; TabBar.Parent = Main
+Instance.new("UICorner",TabBar).CornerRadius = UDim.new(0,8)
+local TBL = Instance.new("UIListLayout",TabBar)
+TBL.FillDirection = Enum.FillDirection.Horizontal; TBL.Padding = UDim.new(0,2)
+local TBP = Instance.new("UIPadding",TabBar)
+TBP.PaddingLeft = UDim.new(0,2); TBP.PaddingRight = UDim.new(0,2)
+TBP.PaddingTop = UDim.new(0,2); TBP.PaddingBottom = UDim.new(0,2)
+
+-- ── Content ──
+local ContentBg = Instance.new("Frame")
+ContentBg.Size = UDim2.new(1,-8,1,-86)
+ContentBg.Position = UDim2.new(0,4,0,82)
+ContentBg.BackgroundColor3 = C.Frame; ContentBg.Parent = Main
+Instance.new("UICorner",ContentBg).CornerRadius = UDim.new(0,8)
+
+local Scroll = Instance.new("ScrollingFrame")
+Scroll.Size = UDim2.new(1,-6,1,-6)
+Scroll.Position = UDim2.new(0,3,0,3)
+Scroll.BackgroundTransparency = 1
+Scroll.ScrollBarThickness = isMobile and 2 or 3
+Scroll.ScrollBarImageColor3 = C.Accent
+Scroll.AutomaticCanvasSize = Enum.AutomaticSize.Y
+Scroll.CanvasSize = UDim2.new(0,0,0,0)
+Scroll.Parent = ContentBg
+
+local ListLayout = Instance.new("UIListLayout",Scroll)
+ListLayout.Padding = UDim.new(0,3); ListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+
+local ScrollPad = Instance.new("UIPadding",Scroll)
+ScrollPad.PaddingLeft = UDim.new(0,3); ScrollPad.PaddingRight = UDim.new(0,3)
+ScrollPad.PaddingTop = UDim.new(0,3); ScrollPad.PaddingBottom = UDim.new(0,3)
+
+-- ═══════════════════════ LOGO MINI BUTTON ═════════════════
+-- Дизайн повторяет логотип: тёмно-синий фон, циановая рамка, 💎, надпись SHAIKHULOV HUB
+
+local LogoBtn = Instance.new("ImageButton")
+LogoBtn.Size = UDim2.new(0,68,0,68)
+LogoBtn.Position = UDim2.new(0,10,0.5,-34)
+LogoBtn.BackgroundColor3 = C.LogoBG
+LogoBtn.BorderSizePixel = 0
+LogoBtn.Image = ""
+LogoBtn.Parent = Gui
+LogoBtn.Visible = false
+LogoBtn.Active = true
+LogoBtn.Draggable = true
+
+Instance.new("UICorner",LogoBtn).CornerRadius = UDim.new(0,14)
+
+-- Cyan glow border
+local LogoStroke = Instance.new("UIStroke",LogoBtn)
+LogoStroke.Color = C.Cyan; LogoStroke.Thickness = 2
+
+-- Inner gradient background
+local LogoBG2 = Instance.new("Frame")
+LogoBG2.Size = UDim2.new(1,0,1,0); LogoBG2.BackgroundColor3 = C.LogoBG
+LogoBG2.BorderSizePixel = 0; LogoBG2.ZIndex = 2; LogoBG2.Parent = LogoBtn
+Instance.new("UICorner",LogoBG2).CornerRadius = UDim.new(0,12)
+local LogoGrad = Instance.new("UIGradient",LogoBG2)
+LogoGrad.Color = ColorSequence.new({
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(15,28,65)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(8,14,38)),
+})
+LogoGrad.Rotation = 135
+
+-- "SHAIKHULOV" top label
+local LTop = Instance.new("TextLabel")
+LTop.Size = UDim2.new(1,-4,0,13); LTop.Position = UDim2.new(0,2,0,3)
+LTop.Text = "SHAIKHULOV"; LTop.TextColor3 = C.Cyan
+LTop.BackgroundTransparency = 1; LTop.Font = Enum.Font.GothamBold
+LTop.TextSize = 7; LTop.ZIndex = 3; LTop.TextScaled = false
+LTop.Parent = LogoBtn
+
+-- 💎 diamond emoji (centre)
+local LDiamond = Instance.new("TextLabel")
+LDiamond.Size = UDim2.new(1,0,0,36); LDiamond.Position = UDim2.new(0,0,0,13)
+LDiamond.Text = "💎"; LDiamond.TextColor3 = C.White
+LDiamond.BackgroundTransparency = 1; LDiamond.Font = Enum.Font.GothamBold
+LDiamond.TextSize = 28; LDiamond.ZIndex = 3; LDiamond.Parent = LogoBtn
+
+-- "HUB" bottom label
+local LBot = Instance.new("TextLabel")
+LBot.Size = UDim2.new(1,-4,0,12); LBot.Position = UDim2.new(0,2,1,-14)
+LBot.Text = "HUB"; LBot.TextColor3 = C.Cyan
+LBot.BackgroundTransparency = 1; LBot.Font = Enum.Font.GothamBold
+LBot.TextSize = 9; LBot.ZIndex = 3; LBot.Parent = LogoBtn
+
+-- Pulse animation on logo button
+local function PulseLogo()
+    task.spawn(function()
+        while LogoBtn.Visible do
+            TweenSvc:Create(LogoStroke, TweenInfo.new(0.8,Enum.EasingStyle.Sine,Enum.EasingDirection.InOut),
+                {Color=Color3.fromRGB(80,200,255), Thickness=3}):Play()
+            task.wait(0.8)
+            TweenSvc:Create(LogoStroke, TweenInfo.new(0.8,Enum.EasingStyle.Sine,Enum.EasingDirection.InOut),
+                {Color=C.Cyan, Thickness=1.5}):Play()
+            task.wait(0.8)
+        end
+    end)
+end
+
+-- ── Show/Hide logic ──
+local function ShowMain()
+    LogoBtn.Visible = false
+    Main.Visible = true
+end
+
+local function ShowLogo()
+    Main.Visible = false
+    LogoBtn.Visible = true
+    PulseLogo()
+end
+
+MinBtn.MouseButton1Click:Connect(ShowLogo)
+LogoBtn.MouseButton1Click:Connect(ShowMain)
+
+-- ═══════════════════════ MOBILE FLY D-PAD ═════════════════
+
+local FlyPad = Instance.new("Frame")
+FlyPad.Size = UDim2.new(0,142,0,105)
+FlyPad.Position = UDim2.new(1,-152,1,-120)
+FlyPad.BackgroundColor3 = Color3.fromRGB(8,14,32)
+FlyPad.BackgroundTransparency = 0.25
+FlyPad.BorderSizePixel = 0
+FlyPad.Visible = false
+FlyPad.Active = true
+FlyPad.ZIndex = 20
+FlyPad.Parent = Gui
+Instance.new("UICorner",FlyPad).CornerRadius = UDim.new(0,14)
+local FPS = Instance.new("UIStroke",FlyPad)
+FPS.Color = C.Cyan; FPS.Thickness = 1.2; FPS.Transparency = 0.3
+
+local function MakePadBtn(text, x, y, w, h, onDown, onUp)
+    local b = Instance.new("TextButton")
+    b.Size = UDim2.new(0,w,0,h)
+    b.Position = UDim2.new(0,x,0,y)
+    b.Text = text; b.TextColor3 = C.White
+    b.BackgroundColor3 = Color3.fromRGB(0,80,180)
+    b.BackgroundTransparency = 0.2
+    b.Font = Enum.Font.GothamBold; b.TextSize = 14
+    b.ZIndex = 21; b.Parent = FlyPad
+    Instance.new("UICorner",b).CornerRadius = UDim.new(0,8)
+    b.MouseButton1Down:Connect(function() b.BackgroundTransparency=0; onDown() end)
+    b.MouseButton1Up:Connect(function()   b.BackgroundTransparency=0.2; onUp() end)
+    -- Touch support
+    b.TouchLongPress:Connect(function() end) -- prevent long press conflicts
+    return b
+end
+
+-- Row 1: ▲ (up) and ▲ (fly up)
+MakePadBtn("↑",  52,  4, 38, 30, function() flyDir.fwd=true  end, function() flyDir.fwd=false  end)
+MakePadBtn("▲",  96,  4, 38, 30, function() flyDir.up=true   end, function() flyDir.up=false   end)
+-- Row 2: ← center →
+MakePadBtn("←",   4, 38, 38, 30, function() flyDir.left=true end, function() flyDir.left=false end)
+MakePadBtn("●",  52, 38, 38, 30, function() end,                   function() end)
+MakePadBtn("→",  96, 38, 38, 30, function() flyDir.right=true end,function() flyDir.right=false end)
+-- Row 3: ↓ and ▼ (fly down)
+MakePadBtn("↓",  52, 72, 38, 30, function() flyDir.back=true  end, function() flyDir.back=false  end)
+MakePadBtn("▼",  96, 72, 38, 30, function() flyDir.down=true  end, function() flyDir.down=false  end)
+
+-- Center dot style (non-interactive indicator)
+local CenterDot = FlyPad:FindFirstChild("TextButton") -- will be styled by MakePadBtn above
+
+-- ═══════════════════════ TAB SYSTEM ═══════════════════════
+
+local Tabs = {}
+local CurTab = "Universal"
+
+local TabDefs = {
+    {name="Universal", text="⚔️"},
+    {name="Visual",    text="👁"},
+    {name="Players",   text="👥"},
+    {name="Game",      text="🎮"},
+    {name="Config",    text="⚙️"},
+}
+
+-- On mobile: show emoji only (saves space in 285px)
+-- On PC: show emoji + short name
+local TabLabels = isMobile and
+    {"⚔️","👁","👥","🎮","⚙️"} or
+    {"⚔️ Унив","👁 Виз","👥 Игр","🎮 Игра","⚙️ Кнф"}
+
+for i, td in ipairs(TabDefs) do
+    local btn = Instance.new("TextButton")
+    btn.Size = UDim2.new(0, isMobile and 50 or 54, 1, 0)
+    btn.Text = TabLabels[i]
+    btn.TextColor3 = C.Text2
+    btn.BackgroundColor3 = C.Frame2
+    btn.Font = Enum.Font.GothamBold
+    btn.TextSize = isMobile and 15 or 8
+    btn.LayoutOrder = i; btn.Parent = TabBar
+    Instance.new("UICorner",btn).CornerRadius = UDim.new(0,6)
+    btn.MouseButton1Click:Connect(function()
+        CurTab = td.name
+        for _, b in pairs(Tabs) do b.BackgroundColor3 = C.Frame2; b.TextColor3 = C.Text2 end
+        btn.BackgroundColor3 = C.Accent; btn.TextColor3 = C.White
+        Update()
+    end)
+    Tabs[td.name] = btn
+end
+Tabs["Universal"].BackgroundColor3 = C.Accent
+Tabs["Universal"].TextColor3 = C.White
+
+-- ═══════════════════════ NOTIFICATIONS ════════════════════
+
+function Notify(text, clr, dur)
+    dur = dur or 3; clr = clr or C.Accent
+    local nW = isMobile and 250 or 270
+    local nf = Instance.new("Frame")
+    nf.Size = UDim2.new(0,nW,0,38)
+    nf.Position = UDim2.new(0.5,-nW/2,0.9,20)
+    nf.BackgroundColor3 = C.Frame; nf.BorderSizePixel = 0; nf.ZIndex = 50
+    nf.BackgroundTransparency = 1; nf.Parent = Gui
+    Instance.new("UICorner",nf).CornerRadius = UDim.new(0,10)
+    local ns = Instance.new("UIStroke",nf); ns.Color = clr; ns.Thickness = 1
+
+    local bar = Instance.new("Frame"); bar.Size = UDim2.new(0,4,0,22); bar.Position = UDim2.new(0,5,0.5,-11)
+    bar.BackgroundColor3 = clr; bar.BorderSizePixel = 0; bar.ZIndex = 51; bar.Parent = nf
+    Instance.new("UICorner",bar).CornerRadius = UDim.new(0,2)
+
+    local lbl = Instance.new("TextLabel")
+    lbl.Size = UDim2.new(1,-18,1,0); lbl.Position = UDim2.new(0,14,0,0)
+    lbl.Text = text; lbl.TextColor3 = C.White; lbl.BackgroundTransparency = 1
+    lbl.Font = Enum.Font.GothamBold; lbl.TextSize = isMobile and 11 or 12
+    lbl.TextXAlignment = Enum.TextXAlignment.Left; lbl.ZIndex = 51; lbl.Parent = nf
+
+    TweenSvc:Create(nf,TweenInfo.new(0.3,Enum.EasingStyle.Back,Enum.EasingDirection.Out),
+        {Position=UDim2.new(0.5,-nW/2,0.9,0), BackgroundTransparency=0}):Play()
+    task.delay(dur, function()
+        local t2 = TweenSvc:Create(nf,TweenInfo.new(0.3,Enum.EasingStyle.Quad,Enum.EasingDirection.In),
+            {Position=UDim2.new(0.5,-nW/2,0.9,20), BackgroundTransparency=1})
+        t2:Play(); t2.Completed:Wait(); nf:Destroy()
+    end)
+end
+
+-- ═══════════════════════ UI BUILDER ═══════════════════════
+
+local order = 0
+
+local function Sep(text)
+    order = order + 1
+    local f = Instance.new("Frame"); f.Size = UDim2.new(1,0,0,20)
+    f.BackgroundTransparency = 1; f.LayoutOrder = order; f.Parent = Scroll
+    local line = Instance.new("Frame"); line.Size = UDim2.new(1,0,0,1)
+    line.Position = UDim2.new(0,0,0.5,0); line.BackgroundColor3 = C.Frame3
+    line.BorderSizePixel = 0; line.Parent = f
+    if text and text ~= "" then
+        local w = math.max(#text * 6 + 14, 40)
+        local lbl = Instance.new("TextLabel")
+        lbl.Size = UDim2.new(0,w,1,0); lbl.Position = UDim2.new(0.5,-w/2,0,0)
+        lbl.Text = text; lbl.TextColor3 = C.Text2; lbl.BackgroundColor3 = C.Frame
+        lbl.Font = Enum.Font.GothamBold; lbl.TextSize = TS3; lbl.ZIndex = 2; lbl.Parent = f
+        Instance.new("UICorner",lbl).CornerRadius = UDim.new(0,4)
+    end
+end
+
+local function Label(text, clr)
+    order = order + 1
+    local l = Instance.new("TextLabel"); l.Size = UDim2.new(1,0,0,14)
+    l.Text = "  "..text; l.TextColor3 = clr or C.Text2
+    l.BackgroundTransparency = 1; l.Font = Enum.Font.GothamBold
+    l.TextSize = TS3; l.TextXAlignment = Enum.TextXAlignment.Left
+    l.LayoutOrder = order; l.Parent = Scroll
+    return l
+end
+
+local function Btn(text, func, clr)
+    order = order + 1
+    local b = Instance.new("TextButton"); b.Size = UDim2.new(1,0,0,BH)
+    b.Text = "  "..text; b.TextColor3 = C.White; b.BackgroundColor3 = clr or C.Frame2
+    b.Font = Enum.Font.GothamBold; b.TextSize = TS
+    b.TextXAlignment = Enum.TextXAlignment.Left
+    b.LayoutOrder = order; b.Parent = Scroll
+    Instance.new("UICorner",b).CornerRadius = UDim.new(0,8)
+    b.MouseButton1Click:Connect(func)
+    local orig = clr or C.Frame2
+    b.MouseEnter:Connect(function() b.BackgroundColor3 = C.Frame3 end)
+    b.MouseLeave:Connect(function() b.BackgroundColor3 = orig end)
+    return b
+end
+
+local function Toggle(text, getState, callback)
+    order = order + 1
+    local f = Instance.new("Frame"); f.Size = UDim2.new(1,0,0,TH)
+    f.BackgroundColor3 = C.Frame2; f.LayoutOrder = order; f.Parent = Scroll
+    Instance.new("UICorner",f).CornerRadius = UDim.new(0,8)
+
+    local lbl = Instance.new("TextLabel")
+    lbl.Size = UDim2.new(1,-54,1,0); lbl.Position = UDim2.new(0,8,0,0)
+    lbl.Text = text; lbl.TextColor3 = C.Text; lbl.BackgroundTransparency = 1
+    lbl.Font = Enum.Font.GothamBold; lbl.TextSize = TS
+    lbl.TextXAlignment = Enum.TextXAlignment.Left; lbl.Parent = f
+
+    local tog = Instance.new("TextButton")
+    tog.Size = UDim2.new(0,44,0,20); tog.Position = UDim2.new(1,-48,0.5,-10)
+    tog.Font = Enum.Font.GothamBold; tog.TextSize = TS3; tog.TextColor3 = C.White
+    tog.Parent = f; Instance.new("UICorner",tog).CornerRadius = UDim.new(0,10)
+
+    local function Refresh()
+        local on = getState()
+        tog.Text = on and "ON" or "OFF"
+        tog.BackgroundColor3 = on and C.Green or C.Frame3
+    end
+    Refresh()
+
+    local click = Instance.new("TextButton")
+    click.Size = UDim2.new(1,0,1,0); click.BackgroundTransparency = 1
+    click.Text = ""; click.Parent = f
+    click.MouseButton1Click:Connect(function() callback(); Refresh() end)
+
+    f.MouseEnter:Connect(function() f.BackgroundColor3 = C.Frame3 end)
+    f.MouseLeave:Connect(function() f.BackgroundColor3 = C.Frame2 end)
+    return f, Refresh
+end
+
+local function NumInput(text, curVal, minV, maxV, callback)
+    order = order + 1
+    local fH = isMobile and 46 or 50
+    local f = Instance.new("Frame"); f.Size = UDim2.new(1,0,0,fH)
+    f.BackgroundColor3 = C.Frame2; f.LayoutOrder = order; f.Parent = Scroll
+    Instance.new("UICorner",f).CornerRadius = UDim.new(0,8)
+
+    local lbl = Instance.new("TextLabel")
+    lbl.Size = UDim2.new(1,-8,0,17); lbl.Position = UDim2.new(0,8,0,3)
+    lbl.TextColor3 = C.Text; lbl.BackgroundTransparency = 1
+    lbl.Font = Enum.Font.Gotham; lbl.TextSize = TS2
+    lbl.TextXAlignment = Enum.TextXAlignment.Left; lbl.Parent = f
+
+    local val = curVal
+    local function SetLbl() lbl.Text = text..":  "..tostring(val) end
+    SetLbl()
+
+    local inp = Instance.new("TextBox")
+    inp.Size = UDim2.new(0.5,-8,0,21); inp.Position = UDim2.new(0,6,0,fH-26)
+    inp.Text = tostring(val); inp.TextColor3 = C.White; inp.BackgroundColor3 = C.Frame3
+    inp.Font = Enum.Font.Gotham; inp.TextSize = TS2; inp.Parent = f
+    Instance.new("UICorner",inp).CornerRadius = UDim.new(0,5)
+
+    local minus = Instance.new("TextButton")
+    minus.Size = UDim2.new(0,25,0,21); minus.Position = UDim2.new(0.5,4,0,fH-26)
+    minus.Text = "−"; minus.TextColor3 = C.White; minus.BackgroundColor3 = C.Frame3
+    minus.Font = Enum.Font.GothamBold; minus.TextSize = 15; minus.Parent = f
+    Instance.new("UICorner",minus).CornerRadius = UDim.new(0,5)
+
+    local plus = Instance.new("TextButton")
+    plus.Size = UDim2.new(0,25,0,21); plus.Position = UDim2.new(0.5,33,0,fH-26)
+    plus.Text = "+"; plus.TextColor3 = C.White; plus.BackgroundColor3 = C.AccentGlow
+    plus.Font = Enum.Font.GothamBold; plus.TextSize = 15; plus.Parent = f
+    Instance.new("UICorner",plus).CornerRadius = UDim.new(0,5)
+
+    local function SetVal(v)
+        v = math.clamp(math.floor(v), minV, maxV); val = v
+        inp.Text = tostring(v); SetLbl(); callback(v)
+    end
+
+    inp.FocusLost:Connect(function() local n=tonumber(inp.Text); if n then SetVal(n) end end)
+    minus.MouseButton1Click:Connect(function() SetVal(val-1) end)
+    plus.MouseButton1Click:Connect(function() SetVal(val+1) end)
+    return f
+end
+
+-- ═══════════════════════ MM2 MEMORY ═══════════════════════
+
+local MurdererMemory, SheriffMemory = {}, {}
+
+local function GetRole(plr)
+    local ch = plr.Character; if not ch then return "Мёртв", C.IW end
+    local hm = ch:FindFirstChildOfClass("Humanoid")
+    if hm and hm.Health <= 0 then
+        MurdererMemory[plr.Name]=nil; SheriffMemory[plr.Name]=nil; return "Мёртв", C.IW
+    end
+    local function checkTool(src)
+        for _, obj in pairs(src:GetChildren()) do
+            if obj:IsA("Tool") then
+                local n = obj.Name:lower()
+                if n:find("knife") or n:find("нож") or n:find("murder") then
+                    MurdererMemory[plr.Name]=true; return "🔪 УБИЙЦА", C.MR
+                end
+                if n:find("gun") or n:find("пистолет") or n:find("sheriff") then
+                    SheriffMemory[plr.Name]=true; return "⭐ ШЕРИФ", C.SB
+                end
+            end
+        end
+    end
+    local r1,c1 = checkTool(ch); if r1 then return r1,c1 end
+    local bp = plr:FindFirstChild("Backpack")
+    if bp then local r2,c2 = checkTool(bp); if r2 then return r2,c2 end end
+    if MurdererMemory[plr.Name] then return "🔪 УБИЙЦА", C.MR end
+    if SheriffMemory[plr.Name] then return "⭐ ШЕРИФ", C.SB end
+    return "👤 Мирный", C.IW
+end
+
+-- ═══════════════════════ CHAMS ════════════════════════════
+
+local ChamsObjs = {}
+
+local function CreateChams(plr)
+    if ChamsObjs[plr] then return end
+    local ch = plr.Character; if not ch then return end
+    local hl = Instance.new("Highlight")
+    hl.FillTransparency = F.Chams.fill and 0.7 or 1
+    hl.OutlineTransparency = 0; hl.OutlineColor = C.IW
+    hl.Adornee = ch; hl.Parent = ch
+    hl.Enabled = F.Chams.on
+    ChamsObjs[plr] = hl
+end
+
+local function UpdateChams()
+    for plr, hl in pairs(ChamsObjs) do
+        if not plr.Character or not hl.Parent then
+            if hl then hl:Destroy() end; ChamsObjs[plr]=nil; continue
+        end
+        local _,clr = isMM2 and F.ESP.on and GetRole(plr) or nil, C.IW
+        if isMM2 and F.ESP.on then _,clr = GetRole(plr) end
+        hl.OutlineColor = clr
+        hl.FillTransparency = F.Chams.fill and 0.7 or 1
+        hl.Enabled = F.Chams.on or (isMM2 and F.ESP.on)
+    end
+end
+
+-- ═══════════════════════ ESP LABELS ═══════════════════════
+
+local function CreateESPLabel(plr)
+    if ESPLabels[plr] then return end
+    local n = Drawing.new("Text"); n.Size=13; n.Font=2; n.Color=C.White
+    n.Outline=true; n.OutlineColor=Color3.fromRGB(0,0,0); n.Center=true; n.Visible=false; n.ZIndex=5
+    local d = Drawing.new("Text"); d.Size=10; d.Font=2; d.Color=Color3.fromRGB(160,200,255)
+    d.Outline=true; d.OutlineColor=Color3.fromRGB(0,0,0); d.Center=true; d.Visible=false; d.ZIndex=5
+    ESPLabels[plr] = {name=n, dist=d}
+end
+
+local function UpdateESPLabels()
+    local myHRP = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
+    for plr, data in pairs(ESPLabels) do
+        if not plr or not plr.Character or not plr.Character:FindFirstChild("Head") then
+            if data.name then data.name.Visible=false end
+            if data.dist then data.dist.Visible=false end
+            continue
+        end
+        local head = plr.Character.Head
+        local pos, onScreen = camera:WorldToViewportPoint(head.Position + Vector3.new(0,2.8,0))
+        if onScreen and (F.ESP.names or F.ESP.distance) then
+            if F.ESP.names and data.name then
+                data.name.Text = plr.DisplayName
+                data.name.Position = Vector2.new(pos.X, pos.Y)
+                data.name.Visible = true
+            else if data.name then data.name.Visible=false end end
+            if F.ESP.distance and data.dist and myHRP then
+                local dist = math.floor((head.Position - myHRP.Position).Magnitude)
+                data.dist.Text = dist.."m"
+                data.dist.Position = Vector2.new(pos.X, pos.Y+15)
+                data.dist.Visible = true
+            else if data.dist then data.dist.Visible=false end end
+        else
+            if data.name then data.name.Visible=false end
+            if data.dist then data.dist.Visible=false end
+        end
+    end
+end
+
+-- ═══════════════════════ AIMBOT ═══════════════════════════
+
+local function GetClosestInFOV()
+    local mp = UIS:GetMouseLocation(); local closest, minD = nil, F.Aimbot.fov
+    for _, plr in pairs(Players:GetPlayers()) do
+        if plr ~= player and plr.Character then
+            local target = plr.Character:FindFirstChild(F.Aimbot.bone) or plr.Character:FindFirstChild("HumanoidRootPart")
+            if target then
+                local sp, on = camera:WorldToViewportPoint(target.Position)
+                if on then
+                    local d = (Vector2.new(sp.X,sp.Y) - mp).Magnitude
+                    if d < minD then minD=d; closest=target end
+                end
+            end
+        end
+    end
+    return closest
+end
+
+-- ═══════════════════════ FLY (PC + Mobile) ════════════════
+
+local flyConn = nil
+
+local function StartFly()
+    local ch = player.Character; if not ch then return end
+    local hrp = ch:FindFirstChild("HumanoidRootPart"); if not hrp then return end
+    local hm = ch:FindFirstChildOfClass("Humanoid"); if not hm then return end
+    hm.PlatformStand = true
+
+    local bg = Instance.new("BodyGyro"); bg.P=9e4; bg.MaxTorque=Vector3.new(9e9,9e9,9e9)
+    bg.CFrame = hrp.CFrame; bg.Parent = hrp
+
+    local bv = Instance.new("BodyVelocity"); bv.Velocity=Vector3.zero
+    bv.MaxForce = Vector3.new(9e9,9e9,9e9); bv.Parent = hrp
+
+    -- Show fly D-pad on mobile
+    if isMobile then FlyPad.Visible = true end
+
+    flyConn = RS.Heartbeat:Connect(function()
+        if not F.Fly.on then
+            pcall(function() bg:Destroy(); bv:Destroy() end)
+            hm.PlatformStand = false
+            if isMobile then FlyPad.Visible = false end
+            -- Reset all directions
+            for k in pairs(flyDir) do flyDir[k] = false end
+            if flyConn then flyConn:Disconnect(); flyConn=nil end
+            return
+        end
+        local cf = camera.CFrame; local dir = Vector3.zero
+
+        -- PC keyboard input
+        if not isMobile then
+            if UIS:IsKeyDown(Enum.KeyCode.W) then dir = dir + cf.LookVector end
+            if UIS:IsKeyDown(Enum.KeyCode.S) then dir = dir - cf.LookVector end
+            if UIS:IsKeyDown(Enum.KeyCode.A) then dir = dir - cf.RightVector end
+            if UIS:IsKeyDown(Enum.KeyCode.D) then dir = dir + cf.RightVector end
+            if UIS:IsKeyDown(Enum.KeyCode.Space)       then dir = dir + Vector3.new(0,1,0) end
+            if UIS:IsKeyDown(Enum.KeyCode.LeftControl) then dir = dir - Vector3.new(0,1,0) end
+        else
+            -- Mobile D-pad input
+            if flyDir.fwd   then dir = dir + cf.LookVector end
+            if flyDir.back  then dir = dir - cf.LookVector end
+            if flyDir.left  then dir = dir - cf.RightVector end
+            if flyDir.right then dir = dir + cf.RightVector end
+            if flyDir.up    then dir = dir + Vector3.new(0,1,0) end
+            if flyDir.down  then dir = dir - Vector3.new(0,1,0) end
+        end
+
+        bv.Velocity = dir.Magnitude > 0 and dir.Unit * F.Fly.val or Vector3.zero
+        bg.CFrame = cf
+    end)
+end
+
+-- ═══════════════════════ ULTRA FLING ══════════════════════
+
+local flingActive = false
+
+local function UltraFling(target)
+    if flingActive then return end; flingActive = true
+    local ch = player.Character; if not ch then flingActive=false; return end
+    local hrp = ch:FindFirstChild("HumanoidRootPart")
+    local hm  = ch:FindFirstChildOfClass("Humanoid")
+    if not hrp or not hm then flingActive=false; return end
+    local tc = target.Character; if not tc then flingActive=false; return end
+    local th = tc:FindFirstChild("HumanoidRootPart"); if not th then flingActive=false; return end
+
+    local oldCF = hrp.CFrame; local PW = F.FlingPower
+    local saved = {}
+    for _, p in pairs(ch:GetDescendants()) do
+        if p:IsA("BasePart") then saved[p]=p.CanCollide; p.CanCollide=false end
+    end
+    hm:ChangeState(Enum.HumanoidStateType.Physics)
+
+    local bv = Instance.new("BodyVelocity"); bv.MaxForce=Vector3.new(math.huge,math.huge,math.huge)
+    bv.Velocity=Vector3.zero; bv.Parent=hrp
+    local bav = Instance.new("BodyAngularVelocity"); bav.MaxTorque=Vector3.new(math.huge,math.huge,math.huge)
+    bav.AngularVelocity=Vector3.new(PW,PW,PW); bav.Parent=hrp
+
+    for i=1,8 do
+        if not th or not th.Parent then break end
+        hrp.CFrame = th.CFrame * CFrame.new(0,-0.5,0)
+        bv.Velocity = Vector3.new(0,PW,0)
+        bav.AngularVelocity = Vector3.new(PW,PW,PW)
+        hrp.RotVelocity = Vector3.new(PW,PW,PW)
+        task.wait(0.015)
+    end
+    for i=1,30 do
+        if not th or not th.Parent then break end
+        hrp.CFrame = th.CFrame * CFrame.new(math.random(-1,1)*0.3,math.random(-1,1)*0.3,math.random(-1,1)*0.3)
+            * CFrame.Angles(math.random()*math.pi*2,math.random()*math.pi*2,math.random()*math.pi*2)
+        local rx,ry,rz = math.random()*2-1, math.random()+0.5, math.random()*2-1
+        bv.Velocity = Vector3.new(rx,ry,rz).Unit * PW
+        bav.AngularVelocity = Vector3.new((math.random()*2-1)*PW,(math.random()*2-1)*PW,(math.random()*2-1)*PW)
+        hrp.RotVelocity = Vector3.new(math.random(-PW,PW),math.random(-PW,PW),math.random(-PW,PW))
+        task.wait(0.01)
+    end
+    for i=1,5 do
+        if not th or not th.Parent then break end
+        hrp.CFrame = th.CFrame
+        bv.Velocity = Vector3.new(math.random(-1,1)*PW, PW, math.random(-1,1)*PW)
+        task.wait(0.01)
+    end
+
+    bv:Destroy(); bav:Destroy(); task.wait(0.05)
+    hrp.Velocity = Vector3.zero; hrp.RotVelocity = Vector3.zero
+    hrp.CFrame = oldCF; hm:ChangeState(Enum.HumanoidStateType.Running)
+    for p, col in pairs(saved) do if p and p.Parent then p.CanCollide=col end end
+    flingActive = false
+end
+
+-- ═══════════════════════ MISC FUNCTIONS ═══════════════════
+
+local function GiveTools()
+    local bp = player:FindFirstChild("Backpack"); if not bp then return end
+    for _, src in pairs({game:GetService("ReplicatedStorage"), game:GetService("Lighting")}) do
+        for _, obj in pairs(src:GetDescendants()) do
+            if obj:IsA("Tool") or obj:IsA("HopperBin") then
+                pcall(function() obj:Clone().Parent = bp end)
+            end
+        end
+    end
+    Notify("🎒 Все инструменты скопированы!", C.Green)
+end
+
+local function GunTP()
+    local ch = player.Character; if not ch then return end
+    local hrp = ch:FindFirstChild("HumanoidRootPart"); if not hrp then return end
+    for _, obj in pairs(workspace:GetDescendants()) do
+        if obj:IsA("Tool") and (obj.Name:lower():find("gun") or obj.Name:lower():find("пистолет")) then
+            local h = obj:FindFirstChild("Handle")
+            if h and obj.Parent ~= player.Backpack then
+                local old = hrp.CFrame; hrp.CFrame = h.CFrame
+                task.wait(0.1); obj.Parent = player.Backpack
+                task.wait(0.1); hrp.CFrame = old; return
+            end
+        end
+    end
+end
+
+local function ApplySky(id)
+    local l = game.Lighting
+    for _, c in pairs(l:GetChildren()) do if c:IsA("Sky") then c:Destroy() end end
+    if     id=="night"  then l.ClockTime=0;  l.Brightness=0.4
+    elseif id=="day"    then l.ClockTime=14; l.Brightness=2.5
+    elseif id=="sunset" then l.ClockTime=18; l.Brightness=1.5
+    elseif id=="blue"   then l.Ambient=Color3.fromRGB(50,100,255)
+    elseif id=="purple" then l.Ambient=Color3.fromRGB(150,50,255)
+    elseif id=="red"    then l.Ambient=Color3.fromRGB(255,50,50)
+    elseif id=="matrix" then l.Ambient=Color3.fromRGB(0,200,0); l.Brightness=0.3
+    else l.Ambient=Color3.fromRGB(127,127,127); l.Brightness=2; l.ClockTime=14 end
+    F.Sky = id
+end
+
+local function SetFullbright(on)
+    local l = game.Lighting
+    if on then l.Brightness=10; l.ClockTime=14; l.FogEnd=100000; l.GlobalShadows=false
+    else l.Brightness=2; l.GlobalShadows=true end
+end
+
+local function UpdateHitbox()
+    for _, plr in pairs(Players:GetPlayers()) do
+        if plr ~= player and plr.Character then
+            local hrp = plr.Character:FindFirstChild("HumanoidRootPart")
+            if hrp then
+                hrp.Size = F.Hitbox.on and Vector3.new(F.Hitbox.size,F.Hitbox.size,F.Hitbox.size) or Vector3.new(2,2,1)
+                hrp.Transparency = F.Hitbox.on and 0.9 or 0
+            end
+        end
+    end
+end
+
+local antiAfkConn
+local function SetAntiAFK(on)
+    if antiAfkConn then antiAfkConn:Disconnect(); antiAfkConn=nil end
+    if on then
+        antiAfkConn = RS.Heartbeat:Connect(function()
+            pcall(function()
+                game:GetService("VirtualUser"):Button2Down(Vector2.new(0,0), CFrame.new())
+                task.wait()
+                game:GetService("VirtualUser"):Button2Up(Vector2.new(0,0), CFrame.new())
+            end)
+        end)
+    end
+end
+
+-- ═══════════════════════ UPDATE / BUILD UI ════════════════
+
+function Update()
+    for _, c in pairs(Scroll:GetChildren()) do if c:IsA("GuiObject") then c:Destroy() end end
+    order = 0
+
+    if Tabs["Game"] then
+        Tabs["Game"].Text = isMobile and "🎮" or ("🎮 "..currentGame.short)
+    end
+
+    if CurTab == "Universal" then
+
+        Sep("⚔️ БОЕВЫЕ")
+        Toggle("🎯 Aimbot",
+            function() return F.Aimbot.on end,
+            function() F.Aimbot.on = not F.Aimbot.on end)
+        Toggle("🔵 Показать FOV",
+            function() return F.Aimbot.showFov end,
+            function() F.Aimbot.showFov = not F.Aimbot.showFov end)
+        NumInput("📐 Радиус FOV", F.Aimbot.fov, 10, 800, function(v) F.Aimbot.fov = v end)
+
+        Sep("🏃 ДВИЖЕНИЕ")
+        Toggle("⚡ Speed Hack",
+            function() return F.Speed.on end,
+            function()
+                F.Speed.on = not F.Speed.on
+                if not F.Speed.on then
+                    local hm = player.Character and player.Character:FindFirstChildOfClass("Humanoid")
+                    if hm then hm.WalkSpeed = 16 end
+                end
+            end)
+        NumInput("🏃 Скорость", F.Speed.val, 1, 500, function(v) F.Speed.val = v end)
+        Toggle("🦘 Infinite Jump",
+            function() return F.InfJump.on end,
+            function() F.InfJump.on = not F.InfJump.on end)
+        Toggle("👻 Noclip",
+            function() return F.Noclip.on end,
+            function() F.Noclip.on = not F.Noclip.on end)
+        Toggle("🦅 Fly"..(isMobile and " [D-pad →]" or "  [W/S/A/D+Space]"),
+            function() return F.Fly.on end,
+            function()
+                F.Fly.on = not F.Fly.on
+                if F.Fly.on then
+                    StartFly()
+                else
+                    local hm = player.Character and player.Character:FindFirstChildOfClass("Humanoid")
+                    if hm then hm.PlatformStand = false end
+                    if isMobile then FlyPad.Visible = false end
+                end
+            end)
+        NumInput("✈️ Скорость полёта", F.Fly.val, 5, 300, function(v) F.Fly.val = v end)
+        Toggle("📍 Click TP"..(isMobile and " (тап)" or ""),
+            function() return F.ClickTP.on end,
+            function() F.ClickTP.on = not F.ClickTP.on end)
+
+        Sep("🎭 ПРОЧЕЕ")
+        Toggle("🌈 RGB Персонаж",
+            function() return F.RGB.on end,
+            function() F.RGB.on = not F.RGB.on end)
+        Toggle("🔕 Anti-AFK",
+            function() return F.AntiAFK.on end,
+            function() F.AntiAFK.on = not F.AntiAFK.on; SetAntiAFK(F.AntiAFK.on) end)
+        Toggle("📦 Hitbox Expander",
+            function() return F.Hitbox.on end,
+            function() F.Hitbox.on = not F.Hitbox.on end)
+        NumInput("📏 Размер хитбокса", F.Hitbox.size, 3, 60, function(v) F.Hitbox.size = v end)
+        Toggle("🌀 Fake Lag",
+            function() return F.FakeLag.on end,
+            function() F.FakeLag.on = not F.FakeLag.on end)
+
+        Sep("☢️ FLING")
+        Toggle("☢️ Fling ALL",
+            function() return F.FlingAll.on end,
+            function() F.FlingAll.on = not F.FlingAll.on end)
+        Toggle("💀 Kill Aura",
+            function() return F.KillAura.on end,
+            function() F.KillAura.on = not F.KillAura.on end)
+        NumInput("🎯 Радиус Kill Aura", F.KillAura.radius, 5, 100, function(v) F.KillAura.radius = v end)
+        NumInput("⚡ Сила флинга", F.FlingPower, 1000, 9999999, function(v) F.FlingPower = v end)
+
+        Sep("🧰 ИНСТРУМЕНТЫ")
+        Btn("🎒  Дать все инструменты", function() GiveTools() end)
+        Btn("🔄  Респавн", function()
+            local hm = player.Character and player.Character:FindFirstChildOfClass("Humanoid")
+            if hm then hm.Health = 0 end
+            Notify("🔄 Респавн...", C.Accent)
+        end)
+        Btn("🖥️  Удалить всё GUI", function()
+            for _, gui in pairs(player:WaitForChild("PlayerGui"):GetChildren()) do
+                pcall(function() gui:Destroy() end)
+            end
+            Notify("🖥️ GUI очищен!", C.Green)
+        end)
+
+    elseif CurTab == "Visual" then
+
+        Sep("👁 VISUALS")
+        Toggle("🟦 Chams",
+            function() return F.Chams.on end,
+            function() F.Chams.on = not F.Chams.on end)
+        Toggle("🟩 Заполнить Chams",
+            function() return F.Chams.fill end,
+            function() F.Chams.fill = not F.Chams.fill end)
+        Toggle("🏷 ESP — Имена",
+            function() return F.ESP.names end,
+            function() F.ESP.names = not F.ESP.names end)
+        Toggle("📏 ESP — Дистанция",
+            function() return F.ESP.distance end,
+            function() F.ESP.distance = not F.ESP.distance end)
+
+        Sep("💡 ОСВЕЩЕНИЕ")
+        Toggle("☀️ Fullbright",
+            function() return F.Fullbright.on end,
+            function()
+                F.Fullbright.on = not F.Fullbright.on
+                SetFullbright(F.Fullbright.on)
+                Notify("☀️ Fullbright: "..(F.Fullbright.on and "ON" or "OFF"), F.Fullbright.on and C.Gold or C.Text2)
+            end)
+        Toggle("🌫 Убрать туман",
+            function() return F.NoFog.on end,
+            function()
+                F.NoFog.on = not F.NoFog.on
+                game.Lighting.FogEnd = F.NoFog.on and 100000 or 1000
+            end)
+
+        Sep("🌅 НЕБО")
+        local skies = {
+            {"🌙 Ночь","night"}, {"☀️ День","day"}, {"🌅 Закат","sunset"},
+            {"🟦 Синее","blue"}, {"🟪 Фиолет","purple"}, {"🟥 Красное","red"},
+            {"💚 Матрица","matrix"}, {"⬜ Стандарт","default"},
+        }
+        for _, s in ipairs(skies) do
+            local b = Btn(s[1], function()
+                ApplySky(s[2]); Update()
+                Notify("🌅 Небо: "..s[1], C.Accent)
+            end)
+            if F.Sky == s[2] then b.BackgroundColor3 = C.AccentGlow end
+        end
+
+    elseif CurTab == "Players" then
+
+        Sep("🎯 ЦЕЛЬ")
+        Label("  Выбрано:  "..(F.Target or "—"), F.Target and C.Gold or C.Text2)
+
+        if F.Target then
+            Btn("☢️  ULTRA FLING выбранного", function()
+                local t = Players:FindFirstChild(F.Target)
+                if t then task.spawn(function() UltraFling(t) end)
+                    Notify("☢️ "..t.DisplayName.." улетел!", C.Red)
+                else Notify("❌ Игрок не найден!", C.Red) end
+            end, C.RedDark)
+            Btn("📍  TP к выбранному", function()
+                local t = Players:FindFirstChild(F.Target)
+                if t and t.Character then
+                    local th = t.Character:FindFirstChild("HumanoidRootPart")
+                    local hrp = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
+                    if th and hrp then
+                        hrp.CFrame = th.CFrame * CFrame.new(2,0,0)
+                        Notify("📍 TP к "..t.DisplayName, C.Accent)
+                    end
+                end
+            end, C.AccentDark)
+            Btn("🔎  Следить (авто TP)", function()
+                local t = Players:FindFirstChild(F.Target)
+                if t then
+                    task.spawn(function()
+                        for i=1,30 do
+                            if not F.Target or not t or not t.Character then break end
+                            local th = t.Character:FindFirstChild("HumanoidRootPart")
+                            local hrp = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
+                            if th and hrp then hrp.CFrame = th.CFrame * CFrame.new(3,0,0) end
+                            task.wait(0.1)
+                        end
+                    end)
+                end
+            end, C.Frame3)
+            Btn("✖️  Снять выбор", function() F.Target=nil; Update() end)
+        end
+
+        Sep("👥 СПИСОК ИГРОКОВ")
+        local count = 0
+        for _, p in pairs(Players:GetPlayers()) do
+            if p ~= player then
+                count = count + 1; order = order + 1
+                local f = Instance.new("Frame")
+                f.Size = UDim2.new(1,0,0,36)
+                f.BackgroundColor3 = F.Target==p.Name and C.AccentDark or C.Frame2
+                f.LayoutOrder = order; f.Parent = Scroll
+                Instance.new("UICorner",f).CornerRadius = UDim.new(0,8)
+
+                local nl = Instance.new("TextLabel")
+                nl.Size = UDim2.new(1,-10,0,18); nl.Position = UDim2.new(0,10,0,2)
+                nl.Text = p.DisplayName; nl.TextColor3 = C.White; nl.BackgroundTransparency=1
+                nl.Font = Enum.Font.GothamBold; nl.TextSize=TS
+                nl.TextXAlignment = Enum.TextXAlignment.Left; nl.Parent=f
+
+                local sl = Instance.new("TextLabel")
+                sl.Size = UDim2.new(1,-10,0,13); sl.Position = UDim2.new(0,10,0,21)
+                sl.Text = "@"..p.Name; sl.TextColor3 = C.Text2; sl.BackgroundTransparency=1
+                sl.Font = Enum.Font.Gotham; sl.TextSize=TS3
+                sl.TextXAlignment = Enum.TextXAlignment.Left; sl.Parent=f
+
+                local click = Instance.new("TextButton")
+                click.Size = UDim2.new(1,0,1,0); click.BackgroundTransparency=1
+                click.Text = ""; click.Parent=f
+                click.MouseButton1Click:Connect(function()
+                    F.Target = p.Name
+                    Notify("🎯 Выбран: "..p.DisplayName, C.Accent)
+                    Update()
+                end)
+                f.MouseEnter:Connect(function() f.BackgroundColor3 = C.Frame3 end)
+                f.MouseLeave:Connect(function() f.BackgroundColor3 = F.Target==p.Name and C.AccentDark or C.Frame2 end)
+            end
+        end
+        if count == 0 then Label("  Нет других игроков", C.Text2) end
+
+    elseif CurTab == "Game" then
+
+        if isMM2 then
+            Sep("🔪 MURDER MYSTERY 2")
+            Toggle("👁 ESP Ролей",
+                function() return F.ESP.on end,
+                function() F.ESP.on = not F.ESP.on end)
+            Toggle("💨 Авто-Fling Убийцу (<20 ст.)",
+                function() return F.FlingMurder.on end,
+                function() F.FlingMurder.on = not F.FlingMurder.on end)
+            Toggle("🔫 Gun TP",
+                function() return F.GunTP.on end,
+                function() F.GunTP.on = not F.GunTP.on end)
+            Sep("🎨 ЛЕГЕНДА")
+            Label("  🔴 Убийца = красная обводка", C.MR)
+            Label("  🔵 Шериф  = синяя обводка",  C.SB)
+            Label("  ⚪ Мирный = белая обводка",  C.IW)
+
+        elseif isBoat then
+            Sep("🚢 BUILD A BOAT")
+            Btn("🎒  Дать все инструменты", function() GiveTools() end)
+            Btn("⚡  Максимальная скорость", function()
+                F.Speed.on = true; F.Speed.val = 120
+                Notify("⚡ Speed MAX!", C.Green)
+            end)
+            Btn("👻  Noclip", function()
+                F.Noclip.on = not F.Noclip.on
+                Notify("👻 Noclip: "..(F.Noclip.on and "ON" or "OFF"), F.Noclip.on and C.Green or C.Red)
+            end)
+        else
+            Sep("🎮 " .. currentGame.name)
+            Label("  Специфичных функций пока нет.", C.Text2)
+            Label("  Используй Universal + Visual!", C.Accent)
+        end
+
+    elseif CurTab == "Config" then
+
+        if isMobile then
+            Sep("📱 УПРАВЛЕНИЕ (ТЕЛЕФОН)")
+            Label("  Кнопка 💎 — открыть меню снова",  C.Cyan)
+            Label("  Fly D-pad — кнопки внизу экрана",  C.Text)
+            Label("  ↑↓←→ — направление полёта",       C.Text)
+            Label("  ▲ — лететь вверх  ▼ — вниз",      C.Text)
+            Label("  Click TP — тап по любому месту",   C.Text)
+        else
+            Sep("⌨️ ГОРЯЧИЕ КЛАВИШИ")
+            Label("  INSERT  —  скрыть / показать меню", C.Text)
+            Label("  E        —  Aimbot on/off",          C.Text)
+            Label("  F        —  Fly on/off",              C.Text)
+            Label("  G        —  Noclip on/off",           C.Text)
+            Label("  H        —  Speed Hack on/off",       C.Text)
+        end
+
+        Sep("📊 ВЕРСИЯ ХАБА")
+        Label("  SHAIKHULOV HUB  v3.1", C.Accent)
+        Label("  Создатель: YZHE_STARUY",       C.Gold)
+        Label("  Telegram: @ShaikhulovHUB_Bot", C.Text)
+        Btn("📋  Копировать ссылку Telegram", function()
+            setclipboard("https://t.me/ShaikhulovHUB_Bot")
+            Notify("📋 Ссылка скопирована!", C.Green)
+        end)
+
+        Sep("⚠️ ПРЕДУПРЕЖДЕНИЕ")
+        Label("  Только для образовательных целей.", C.Red)
+        Label("  Используй на свой страх и риск.",  C.Red)
+    end
+end
+
+-- ═══════════════════════ GAME LOOPS ═══════════════════════
+
+RS.RenderStepped:Connect(function()
+    UpdateChams()
+    UpdateESPLabels()
+
+    if F.Aimbot.on and F.Aimbot.showFov then
+        FovCircle.Visible = true
+        FovCircle.Radius  = F.Aimbot.fov
+        FovCircle.Position = UIS:GetMouseLocation()
+    else
+        FovCircle.Visible = false
+    end
+
+    for _, p in pairs(Players:GetPlayers()) do
+        if p ~= player and p.Character then
+            if not ChamsObjs[p] then CreateChams(p) end
+            if not ESPLabels[p] then CreateESPLabel(p) end
+        end
+    end
+
+    if F.Hitbox.on then UpdateHitbox() end
+end)
+
+RS.Heartbeat:Connect(function()
+    local ch  = player.Character; if not ch then return end
+    local hm  = ch:FindFirstChildOfClass("Humanoid")
+    local hrp = ch:FindFirstChild("HumanoidRootPart")
+
+    if F.Aimbot.on then
+        local t = GetClosestInFOV()
+        if t then camera.CFrame = CFrame.new(camera.CFrame.Position, t.Position) end
+    end
+
+    if F.InfJump.on and hm then hm.JumpPower = 60 end
+
+    if F.Noclip.on then
+        for _, p in pairs(ch:GetChildren()) do
+            if p:IsA("BasePart") then p.CanCollide = false end
+        end
+    end
+
+    if F.Speed.on and hm and not F.Fly.on then hm.WalkSpeed = F.Speed.val end
+
+    if F.RGB.on then
+        local clr = Color3.fromHSV((tick()*80)%255/255, 1, 1)
+        for _, p in pairs(ch:GetChildren()) do if p:IsA("BasePart") then p.Color=clr end end
+    end
+
+    if F.FlingAll.on then
+        for _, p in pairs(Players:GetPlayers()) do
+            if p ~= player then task.spawn(function() UltraFling(p) end) end
+        end
+    end
+
+    if F.KillAura.on and hrp then
+        for _, p in pairs(Players:GetPlayers()) do
+            if p ~= player and p.Character then
+                local th = p.Character:FindFirstChild("HumanoidRootPart")
+                if th and (th.Position - hrp.Position).Magnitude <= F.KillAura.radius then
+                    task.spawn(function() UltraFling(p) end)
+                end
+            end
+        end
+    end
+
+    if F.FlingMurder.on and isMM2 and hrp then
+        for _, p in pairs(Players:GetPlayers()) do
+            if p ~= player and p.Character then
+                local th = p.Character:FindFirstChild("HumanoidRootPart")
+                if th and (th.Position - hrp.Position).Magnitude < 20 then
+                    local role = GetRole(p)
+                    if role:find("УБИЙЦА") then task.spawn(function() UltraFling(p) end) end
+                end
+            end
+        end
+    end
+
+    if F.GunTP.on and isMM2 then GunTP() end
+    if F.Fullbright.on then SetFullbright(true) end
+
+    if F.FakeLag.on then
+        local endT = tick() + 0.04
+        while tick() < endT do end
+    end
+end)
+
+-- ═══════════════════════ INPUT ════════════════════════════
+
+UIS.JumpRequest:Connect(function()
+    if F.InfJump.on then
+        local hm = player.Character and player.Character:FindFirstChildOfClass("Humanoid")
+        if hm then hm:ChangeState(Enum.HumanoidStateType.Jumping) end
+    end
+end)
+
+-- PC: mouse Click TP
+mouse.Button1Down:Connect(function()
+    if F.ClickTP.on and not isMobile then
+        local hrp = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
+        if hrp then hrp.CFrame = CFrame.new(mouse.Hit.X, mouse.Hit.Y+3, mouse.Hit.Z) end
+    end
+end)
+
+-- Mobile: tap Click TP (TouchTap fires once per tap, not held)
+UIS.TouchTap:Connect(function(positions, processed)
+    if processed then return end
+    if not F.ClickTP.on or not isMobile then return end
+    local hrp = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
+    if not hrp then return end
+    local tapPos = positions[1]
+    if not tapPos then return end
+    local ray = camera:ScreenPointToRay(tapPos.X, tapPos.Y)
+    local result = workspace:Raycast(ray.Origin, ray.Direction * 1000)
+    if result then
+        hrp.CFrame = CFrame.new(result.Position + Vector3.new(0,3,0))
+        Notify("📍 Телепорт!", C.Accent, 1.5)
+    end
+end)
+
+-- PC keyboard hotkeys
+UIS.InputBegan:Connect(function(input, gpe)
+    if gpe then return end
+    if input.KeyCode == Enum.KeyCode.Insert then
+        if Main.Visible then ShowLogo() else ShowMain() end
+
+    elseif input.KeyCode == Enum.KeyCode.E then
+        F.Aimbot.on = not F.Aimbot.on
+        Notify("🎯 Aimbot: "..(F.Aimbot.on and "✅ ON" or "❌ OFF"), F.Aimbot.on and C.Green or C.Red)
+
+    elseif input.KeyCode == Enum.KeyCode.F then
+        F.Fly.on = not F.Fly.on
+        if F.Fly.on then StartFly()
+        else
+            local hm = player.Character and player.Character:FindFirstChildOfClass("Humanoid")
+            if hm then hm.PlatformStand = false end
+        end
+        Notify("🦅 Fly: "..(F.Fly.on and "✅ ON" or "❌ OFF"), F.Fly.on and C.Green or C.Red)
+
+    elseif input.KeyCode == Enum.KeyCode.G then
+        F.Noclip.on = not F.Noclip.on
+        Notify("👻 Noclip: "..(F.Noclip.on and "✅ ON" or "❌ OFF"), F.Noclip.on and C.Green or C.Red)
+
+    elseif input.KeyCode == Enum.KeyCode.H then
+        F.Speed.on = not F.Speed.on
+        if not F.Speed.on then
+            local hm = player.Character and player.Character:FindFirstChildOfClass("Humanoid")
+            if hm then hm.WalkSpeed = 16 end
+        end
+        Notify("⚡ Speed: "..(F.Speed.on and "✅ ON" or "❌ OFF"), F.Speed.on and C.Green or C.Red)
+    end
+end)
+
+-- ═══════════════════════ PLAYER EVENTS ════════════════════
+
+Players.PlayerAdded:Connect(function(p)
+    if p ~= player then
+        p.CharacterAdded:Connect(function()
+            task.wait(0.5); CreateChams(p); CreateESPLabel(p)
+        end)
+    end
+end)
+
+Players.PlayerRemoving:Connect(function(p)
+    if ChamsObjs[p] then ChamsObjs[p]:Destroy(); ChamsObjs[p]=nil end
+    if ESPLabels[p] then
+        if ESPLabels[p].name then ESPLabels[p].name:Remove() end
+        if ESPLabels[p].dist then ESPLabels[p].dist:Remove() end
+        ESPLabels[p]=nil
+    end
+    if F.Target == p.Name then F.Target=nil end
+    MurdererMemory[p.Name]=nil; SheriffMemory[p.Name]=nil
+end)
+
+for _, p in pairs(Players:GetPlayers()) do
+    if p ~= player and p.Character then CreateChams(p); CreateESPLabel(p) end
+    if p ~= player then
+        p.CharacterAdded:Connect(function()
+            task.wait(0.5); CreateChams(p); CreateESPLabel(p)
+        end)
+    end
+end
+
+-- ═══════════════════════ START ════════════════════════════
+
+Update()
+Notify("🔷 SHAIKHULOV HUB v3.1 загружен!", C.Accent, 4)
+print("╔══════════════════════════════════╗")
+print("║  SHAIKHULOV HUB  v3.1  LOADED   ║")
+print("║  by YZHE_STARUY  • Mobile Ready ║")
+print("╚══════════════════════════════════╝")
