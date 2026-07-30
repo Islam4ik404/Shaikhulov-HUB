@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔷 SHAIKHULOV HUB | YZHE_STARUY</title>
+    <style>
+        body {
+            background: #080c19;
+            color: #b4c8f0;
+            font-family: 'Segoe UI', sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        .logo {
+            font-size: 40px;
+            margin-top: 50px;
+        }
+        h1 {
+            color: #0078ff;
+            font-size: 28px;
+        }
+        .code-box {
+            background: #121a2e;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #0078ff;
+            margin: 20px auto;
+            max-width: 500px;
+            word-break: break-all;
+            font-size: 13px;
+            color: #00c864;
+        }
+        .btn {
+            background: #0078ff;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        .btn:hover {
+            background: #0058cc;
+        }
+        .features {
+            max-width: 400px;
+            margin: 30px auto;
+            text-align: left;
+        }
+        .features li {
+            margin: 8px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="logo">🔷</div>
+    <h1>SHAIKHULOV HUB</h1>
+    <p>👤 Создатель: <span style="color:#ffc800;">YZHE_STARUY</span></p>
+    
+    <div class="code-box" id="code">
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/YZHE_STARUY/ShaikhulovHUB/main/hub.lua"))()
+    </div>
+    <button class="btn" onclick="copyCode()">📋 КОПИРОВАТЬ</button>
+    
+    <ul class="features">
+        <li>🎯 Aimbot с FOV</li>
+        <li>👁️ Chams (обводка)</li>
+        <li>🔪 ESP с памятью (MM2)</li>
+        <li>💥 Vega X Fling</li>
+        <li>🚢 Auto Build Boat</li>
+        <li>🎒 Give All Tools</li>
+        <li>🌈 RGB Mode</li>
+        <li>😈 Fake Ban прикол</li>
+    </ul>
+    
+    <p style="margin-top: 40px; color: #5a6a8a;">© 2025 SHAIKHULOV HUB | YZHE_STARUY</p>
+    
+    <script>
+        function copyCode() {
+            navigator.clipboard.writeText('loadstring(game:HttpGet("https://raw.githubusercontent.com/YZHE_STARUY/ShaikhulovHUB/main/hub.lua"))()');
+            alert('✅ Код скопирован!');
+        }
+    </script>
+</body>
+</html>
