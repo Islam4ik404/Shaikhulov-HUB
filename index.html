@@ -1,371 +1,255 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { Toaster } from '@/components/ui/toaster';
-import { TooltipProvider } from '@/components/ui/tooltip';
-import { ParticleBackground } from '@/components/ParticleBackground';
-import { GlowCard } from '@/components/GlowCard';
-import { CopyButton } from '@/components/CopyButton';
-import { StatsCounter } from '@/components/StatsCounter';
-import { motion } from 'framer-motion';
-import logoImg from '@assets/0_1000003476_1785430287227.png';
-import { 
-  Target, Box, Radio, Zap, Bird, Rabbit, Ghost, MapPin, 
-  Palette, ShieldOff, Maximize2, Wifi, Flame, Skull,
-  PackagePlus, Sun, Cloud, Sunset, Swords, Ban,
-  PocketKnife, Ship, Crosshair, Home as HomeIcon, Send
-} from 'lucide-react';
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="SHAIKHULOV HUB - мощный Roblox эксплойт. 25+ функций, Aimbot, ESP, Fly, Kill Aura. Создатель YZHE_STARUY.">
+  <meta name="keywords" content="shaikhulov hub, roblox cheat, mm2 script, esp, aimbot, fling, yzhe_staruy, роблокс чит">
+  <title>💠💎 SHAIKHULOV HUB | YZHE_STARUY</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --blue: #0078ff; --blue2: #0050cc; --glow: #0078ff88;
+      --bg: #06090f; --card: #0d1422; --border: #1a2540;
+      --text: #c8d8f8; --text2: #7090b8; --gold: #ffc800;
+      --red: #ff3a3a; --green: #00c864;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg); color: var(--text);
+      font-family: 'Inter', sans-serif; min-height: 100vh; overflow-x: hidden;
+    }
+    #bg-canvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+    .wrap { position: relative; z-index: 1; max-width: 860px; margin: 0 auto; padding: 0 24px 80px; }
+    header { text-align: center; padding: 60px 0 40px; }
+    .logo { width: 80px; height: 80px; margin: 0 auto 20px; }
+    .logo img { width: 100%; height: 100%; filter: drop-shadow(0 0 30px rgba(0,212,255,0.8)); animation: logoFloat 3s ease-in-out infinite; }
+    @keyframes logoFloat { 0%,100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-8px) rotate(5deg); } }
+    h1 {
+      font-size: clamp(2rem, 6vw, 3.4rem); font-weight: 900; letter-spacing: 3px;
+      background: linear-gradient(90deg, #60b0ff, #fff 45%, #60b0ff);
+      background-size: 200%; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; animation: shimmer 3s linear infinite;
+    }
+    @keyframes shimmer { 0% { background-position: 200% center; } 100% { background-position: -200% center; } }
+    .subtitle { margin-top: 10px; font-size: .95rem; color: var(--text2); letter-spacing: 1px; }
+    .subtitle span { color: var(--gold); font-weight: 700; }
+    .badge-row { display: flex; justify-content: center; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+    .badge { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 5px 14px; font-size: .75rem; font-weight: 600; color: var(--text2); }
+    .badge.blue { border-color: var(--blue); color: var(--blue); }
+    .badge.gold { border-color: var(--gold); color: var(--gold); }
+    .badge.green { border-color: var(--green); color: var(--green); }
 
-const queryClient = new QueryClient();
+    /* KEY SYSTEM */
+    .key-section { margin: 40px 0; }
+    .key-card {
+      background: linear-gradient(135deg, rgba(255,200,0,0.1), rgba(255,180,0,0.05));
+      border: 2px solid var(--gold); border-radius: 16px; padding: 30px; text-align: center;
+      box-shadow: 0 0 40px rgba(255,200,0,0.1);
+    }
+    .key-card h2 { color: var(--gold); font-size: 1.5rem; margin-bottom: 10px; }
+    .key-card p { color: var(--text2); margin-bottom: 20px; }
+    .key-btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--gold); color: #000; border: none; border-radius: 12px;
+      padding: 14px 28px; font-size: 1.1rem; font-weight: 700; cursor: pointer;
+      transition: all 0.3s; text-decoration: none;
+    }
+    .key-btn:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(255,200,0,0.5); }
 
-const LOADSTRING = `loadstring(game:HttpGet("https://raw.githubusercontent.com/islam4ik404/Shaikhulov-HUB/refs/heads/main/main.lua"))()`;
+    /* LOADSTRING */
+    .ls-section { margin: 40px 0; }
+    .ls-box {
+      background: var(--card); border: 1px solid var(--blue); border-radius: 14px;
+      padding: 20px; display: flex; align-items: center; gap: 14px;
+      box-shadow: 0 0 30px rgba(0,120,255,0.1);
+    }
+    .ls-code {
+      flex: 1; font-family: 'Courier New', monospace; font-size: .82rem;
+      color: #90c8ff; word-break: break-all; user-select: all;
+    }
+    .copy-btn {
+      flex-shrink: 0; background: var(--blue); color: #fff; border: none;
+      border-radius: 10px; padding: 12px 24px; font-size: .85rem; font-weight: 700;
+      cursor: pointer; transition: all .2s; box-shadow: 0 4px 20px rgba(0,120,255,0.3);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .copy-btn:hover { background: #1a8bff; transform: translateY(-2px); }
+    .copy-btn.copied { background: var(--green); }
 
-const features = [
-  { icon: Target,     title: 'Aimbot с FOV',        desc: 'Автоприцел, настраиваемый радиус FOV-круга' },
-  { icon: Box,        title: 'Chams (обводка)',      desc: 'Подсветка игроков сквозь стены' },
-  { icon: Radio,      title: 'ESP с памятью (MM2)',  desc: 'Видишь убийцу и шерифа даже после смены роли' },
-  { icon: Zap,        title: 'Speed Hack',           desc: 'Ускорение персонажа до 500 единиц' },
-  { icon: Bird,       title: 'Fly',                  desc: 'Полёт PC (WASD+Space) и Mobile (D-pad)' },
-  { icon: Rabbit,     title: 'Infinite Jump',        desc: 'Бесконечный прыжок' },
-  { icon: Ghost,      title: 'Noclip',               desc: 'Проходить сквозь стены' },
-  { icon: MapPin,     title: 'Click TP',             desc: 'Телепорт кликом/тапом' },
-  { icon: Palette,    title: 'RGB Персонаж',         desc: 'Переливающийся цвет в реальном времени' },
-  { icon: ShieldOff,  title: 'Anti-AFK',             desc: 'Защита от кика за бездействие' },
-  { icon: Maximize2,  title: 'Hitbox Expander',      desc: 'Увеличение хитбоксов противников' },
-  { icon: Wifi,       title: 'Fake Lag',             desc: 'Имитация лага' },
-  { icon: Flame,      title: 'Ultra Fling',          desc: 'Отбросить игрока с силой 999 999' },
-  { icon: Skull,      title: 'Kill Aura',            desc: 'Автоматический флинг всех в радиусе' },
-  { icon: PackagePlus,title: 'Give All Tools',       desc: 'Клонировать все инструменты' },
-  { icon: Sun,        title: 'Fullbright',           desc: 'Максимальная яркость, видимость везде' },
-  { icon: Cloud,      title: 'No Fog',               desc: 'Убрать туман в играх' },
-  { icon: Sunset,     title: 'Sky Changer',          desc: '8 вариантов неба (ночь/день/закат/матрица)' },
-  { icon: Swords,     title: 'Gun TP (MM2)',         desc: 'Телепорт к пистолету в Murder Mystery 2' },
-  { icon: Ban,        title: 'Fake Ban',             desc: 'Показать фейковый бан игроку (тролинг)' },
-];
+    /* STATS */
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 40px 0; }
+    .stat-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 20px; text-align: center; }
+    .stat-num { font-size: 2rem; font-weight: 900; color: var(--blue); }
+    .stat-lbl { font-size: .75rem; color: var(--text2); margin-top: 4px; }
 
-const games = [
-  { icon: PocketKnife, title: 'Murder Mystery 2', desc: 'ESP ролей, Gun TP, Fling убийцы' },
-  { icon: Ship,        title: 'Build a Boat',     desc: 'Авто-инструменты, Max Speed, Noclip' },
-  { icon: Crosshair,   title: 'Arsenal',          desc: 'Universal фичи' },
-  { icon: HomeIcon,    title: 'Brookhaven',       desc: 'Universal фичи' },
-];
+    /* FEATURES */
+    .sec-title { text-align: center; font-size: .8rem; font-weight: 700; letter-spacing: 3px; color: var(--text2); text-transform: uppercase; margin: 40px 0 20px; }
+    .features { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; margin-bottom: 40px; }
+    .feat-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+      padding: 18px; display: flex; align-items: flex-start; gap: 14px;
+      transition: border-color .25s, transform .2s;
+    }
+    .feat-card:hover { border-color: var(--blue); transform: translateY(-3px); }
+    .feat-icon { font-size: 1.5rem; width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; background: rgba(0,120,255,0.1); border-radius: 10px; flex-shrink: 0; }
+    .feat-name { font-size: .9rem; font-weight: 700; color: #fff; margin-bottom: 3px; }
+    .feat-desc { font-size: .76rem; color: var(--text2); line-height: 1.4; }
 
-const steps = [
-  { num: '01', text: 'Получи ключ в боте @ShaikhulovHUB_Bot' },
-  { num: '02', text: 'Открой Roblox и зайди в любую игру' },
-  { num: '03', text: 'Запусти эксплойт (Fluxus, Delta, Solara, Hydrogen)' },
-  { num: '04', text: 'Скопируй loadstring выше и вставь в эксплойт' },
-];
+    /* STEPS */
+    .steps { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; margin-bottom: 40px; }
+    .step { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 20px; text-align: center; }
+    .step-num { width: 36px; height: 36px; background: var(--blue); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; margin: 0 auto 12px; }
 
-function Home() {
-  return (
-    <div className="min-h-screen w-full relative overflow-hidden">
-      <ParticleBackground />
+    /* FOOTER */
+    footer { text-align: center; padding: 30px 0; border-top: 1px solid var(--border); font-size: .78rem; color: var(--text2); }
+    footer strong { color: var(--blue); }
 
-      {/* Hero */}
-      <section className="relative z-10 min-h-screen flex items-center justify-center px-4 py-20">
-        <div className="max-w-6xl mx-auto text-center">
-          <motion.div initial={{ opacity: 0, scale: 0.5 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8 }} className="mb-8 inline-block">
-            <img src={logoImg} alt="SHAIKHULOV HUB Logo" className="w-32 h-32 md:w-40 md:h-40 mx-auto animate-float"
-              style={{ filter: 'drop-shadow(0 0 30px rgba(0,212,255,0.8)) drop-shadow(0 0 60px rgba(0,120,255,0.6))' }} />
-          </motion.div>
-          <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-5xl md:text-7xl lg:text-8xl font-black mb-6 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent animate-gradient"
-            style={{ backgroundSize: '200% 200%' }}>
-            SHAIKHULOV HUB
-          </motion.h1>
-          <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-xl md:text-2xl text-muted-foreground mb-12">
-            Мощный Roblox эксплойт для мобильных и ПК
-          </motion.p>
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.6 }}
-            className="flex flex-wrap justify-center gap-8 mb-16">
-            <StatsCounter end={20} label="Функций" suffix="+" />
-            <StatsCounter end={4} label="Игры" />
-            <StatsCounter end={3} label="Версия" suffix=".1" />
-          </motion.div>
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.8 }}>
-            <a href="https://t.me/ShaikhulovHUB_Bot" target="_blank" rel="noopener noreferrer"
-              className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-accent to-primary text-white rounded-lg font-bold text-lg transition-all duration-300 hover:scale-110 hover:shadow-2xl hover:shadow-accent/50">
-              <Send className="w-6 h-6" /> Получить ключ в Telegram
-            </a>
-          </motion.div>
-        </div>
-      </section>
+    /* TOAST */
+    .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--green); color: #fff; font-weight: 700; padding: 12px 28px; border-radius: 40px; transition: all .35s; opacity: 0; z-index: 999; }
+    .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
 
-      {/* Key System */}
-      <section className="relative z-10 py-20 px-4">
-        <div className="max-w-4xl mx-auto">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="relative group">
-            <div className="absolute -inset-1 bg-gradient-to-r from-yellow-400 via-amber-500 to-yellow-400 rounded-lg opacity-75 group-hover:opacity-100 blur transition-opacity duration-500" />
-            <div className="relative bg-gradient-to-br from-yellow-900/40 to-amber-900/40 border-2 border-yellow-500/50 rounded-lg p-8 md:p-12 text-center">
-              <div className="text-6xl mb-4">🔑</div>
-              <h3 className="text-3xl md:text-4xl font-bold mb-4 text-yellow-300">Ключ находится в боте</h3>
-              <p className="text-lg text-yellow-100/80 mb-6">Получите актуальный ключ доступа в нашем Telegram боте</p>
-              <a href="https://t.me/ShaikhulovHUB_Bot" target="_blank" rel="noopener noreferrer"
-                className="inline-flex items-center gap-3 px-8 py-4 bg-yellow-500 hover:bg-yellow-400 text-black rounded-lg font-bold text-lg transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-yellow-500/50">
-                <Send className="w-6 h-6" /> @ShaikhulovHUB_Bot
-              </a>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+    @media (max-width: 540px) {
+      .stats { grid-template-columns: repeat(3,1fr); }
+      .ls-box { flex-direction: column; }
+      .copy-btn { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
 
-      {/* Loadstring */}
-      <section className="relative z-10 py-20 px-4">
-        <div className="max-w-4xl mx-auto">
-          <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-            className="text-4xl md:text-5xl font-bold text-center mb-12 glow-text">Loadstring</motion.h2>
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="relative group">
-            <div className="absolute -inset-1 bg-gradient-to-r from-primary via-accent to-primary rounded-lg opacity-75 group-hover:opacity-100 blur transition-opacity duration-500" />
-            <div className="relative bg-card border border-border rounded-lg p-6">
-              <pre className="font-mono text-sm md:text-base text-accent overflow-x-auto mb-6 p-4 bg-muted/50 rounded border border-primary/30 select-all">{LOADSTRING}</pre>
-              <div className="flex justify-center"><CopyButton text={LOADSTRING} /></div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+<canvas id="bg-canvas"></canvas>
 
-      {/* Features */}
-      <section className="relative z-10 py-20 px-4">
-        <div className="max-w-7xl mx-auto">
-          <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-            className="text-4xl md:text-5xl font-bold text-center mb-16 glow-text">20+ Функций</motion.h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {features.map((f, idx) => {
-              const Icon = f.icon;
-              return (
-                <GlowCard key={idx} delay={idx * 0.05}>
-                  <div className="flex items-start gap-4">
-                    <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-primary/20 flex items-center justify-center group-hover:bg-primary/30 transition-colors">
-                      <Icon className="w-6 h-6 text-primary" />
-                    </div>
-                    <div>
-                      <h3 className="font-bold text-lg mb-1">{f.title}</h3>
-                      <p className="text-sm text-muted-foreground">{f.desc}</p>
-                    </div>
-                  </div>
-                </GlowCard>
-              );
-            })}
-          </div>
-        </div>
-      </section>
+<div class="wrap">
 
-      {/* Games */}
-      <section className="relative z-10 py-20 px-4">
-        <div className="max-w-6xl mx-auto">
-          <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-            className="text-4xl md:text-5xl font-bold text-center mb-16 glow-text">Поддерживаемые игры</motion.h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {games.map((g, idx) => {
-              const Icon = g.icon;
-              return (
-                <GlowCard key={idx} delay={idx * 0.1}>
-                  <div className="text-center">
-                    <div className="w-16 h-16 mx-auto mb-4 rounded-lg bg-accent/20 flex items-center justify-center group-hover:bg-accent/30 transition-colors">
-                      <Icon className="w-8 h-8 text-accent" />
-                    </div>
-                    <h3 className="font-bold text-xl mb-2">{g.title}</h3>
-                    <p className="text-sm text-muted-foreground">{g.desc}</p>
-                  </div>
-                </GlowCard>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* How to use */}
-      <section className="relative z-10 py-20 px-4">
-        <div className="max-w-4xl mx-auto">
-          <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-            className="text-4xl md:text-5xl font-bold text-center mb-16 glow-text">Как использовать</motion.h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {steps.map((s, idx) => (
-              <GlowCard key={idx} delay={idx * 0.1}>
-                <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-16 h-16 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center text-2xl font-bold">
-                    {s.num}
-                  </div>
-                  <div className="flex-1 pt-2"><p className="text-lg">{s.text}</p></div>
-                </div>
-              </GlowCard>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="relative z-10 py-12 px-4 border-t border-border">
-        <div className="max-w-6xl mx-auto text-center">
-          <div className="flex flex-col md:flex-row items-center justify-center gap-4 mb-6">
-            <img src={logoImg} alt="Logo" className="w-12 h-12" style={{ filter: 'drop-shadow(0 0 10px rgba(0,212,255,0.6))' }} />
-            <div className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">SHAIKHULOV HUB</div>
-          </div>
-          <div className="text-muted-foreground space-y-2">
-            <p>© 2025 SHAIKHULOV HUB | Создатель: YZHE_STARUY</p>
-            <p>Telegram: <a href="https://t.me/ShaikhulovHUB_Bot" target="_blank" rel="noopener noreferrer"
-              className="text-accent hover:text-primary transition-colors">@ShaikhulovHUB_Bot</a> | v3.1</p>
-            <p className="text-sm mt-4 text-muted-foreground/60">Mobile Ready (Samsung A16) | PC Compatible</p>
-          </div>
-        </div>
-      </footer>
+  <!-- HEADER -->
+  <header>
+    <div class="logo">
+      <img src="https://i.imgur.com/3J5AP3Y.png" alt="SHAIKHULOV HUB Logo" />
     </div>
-  );
-}
+    <h1>SHAIKHULOV HUB</h1>
+    <p class="subtitle">Создатель: <span>YZHE_STARUY</span></p>
+    <div class="badge-row">
+      <span class="badge blue">25+ Функций</span>
+      <span class="badge gold">v3.1</span>
+      <span class="badge green">Mobile Ready</span>
+    </div>
+  </header>
 
-function App() {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Home />
-        <Toaster />
-      </TooltipProvider>
-    </QueryClientProvider>
-  );
-}
+  <!-- KEY SYSTEM -->
+  <div class="key-section">
+    <div class="key-card">
+      <h2>🔑 Получите ключ доступа</h2>
+      <p>Ключ выдаётся бесплатно в нашем Telegram боте</p>
+      <a href="https://t.me/ShaikhulovHUB_Bot" target="_blank" class="key-btn">
+        <span>🤖</span> @ShaikhulovHUB_Bot
+      </a>
+    </div>
+  </div>
 
-export default App;
-          import { useEffect, useRef } from 'react';
+  <!-- LOADSTRING -->
+  <div class="ls-section">
+    <div class="ls-label" style="text-align:center;font-size:.75rem;font-weight:700;letter-spacing:2px;color:var(--text2);text-transform:uppercase;margin-bottom:14px;">Loadstring для эксплойта</div>
+    <div class="ls-box">
+      <div class="ls-code" id="ls-text">loadstring(game:HttpGet("https://raw.githubusercontent.com/Islam4ik404/Shaikhulov-HUB/refs/heads/main/main.lua"))()</div>
+      <button class="copy-btn" id="copyBtn" onclick="copyLS()">
+        <span>📋</span> КОПИРОВАТЬ
+      </button>
+    </div>
+  </div>
 
-interface Particle { x: number; y: number; vx: number; vy: number; }
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat-card"><span class="stat-num">25+</span><div class="stat-lbl">Функций</div></div>
+    <div class="stat-card"><span class="stat-num">4</span><div class="stat-lbl">Игры</div></div>
+    <div class="stat-card"><span class="stat-num">v3.1</span><div class="stat-lbl">Версия</div></div>
+  </div>
 
-export function ParticleBackground() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  <!-- FEATURES -->
+  <div class="sec-title">Возможности</div>
+  <div class="features">
+    <div class="feat-card"><div class="feat-icon">🎯</div><div class="feat-body"><div class="feat-name">Aimbot с FOV</div><div class="feat-desc">Автоприцел с настраиваемым радиусом. Показ круга FOV на экране.</div></div></div>
+    <div class="feat-card"><div class="feat-icon">🦅</div><div class="feat-body"><div class="feat-name">Fly (PC + Mobile)</div><div class="feat-desc">Полёт с WASD на ПК и экранным D-Pad на телефоне.</div></div></div>
+    <div class="feat-card"><div class="feat-icon">👁️</div><div class="feat-body"><div class="feat-name">Chams + ESP</div><div class="feat-desc">Обводка игроков + имена + дистанция. В MM2 цветовая маркировка ролей.</div></div></div>
+    <div class="feat-card"><div class="feat-icon">☢️</div><div class="feat-body"><div class="feat-name">Ultra Fling</div><div class="feat-desc">43 итерации, BodyVelocity + BodyAngularVelocity. Настраиваемая сила.</div></div></div>
+    <div class="feat-card"><div class="feat-icon">💀</div><div class="feat-body"><div class="feat-name">Kill Aura</div><div class="feat-desc">Авто-атака всех игроков в заданном радиусе.</div></div></div>
+    <div class="feat-card"><div class="feat-icon">📦</div><div class="feat-body"><div class="feat-name">Hitbox Expander</div><div class="feat-desc">Увеличение хитбоксов врагов для лёгкого попадания.</div></div></div>
+    <div class="feat-card"><div class="feat-icon">☀️</div><div class="feat-body"><div class="feat-name">Fullbright + No Fog</div><div class="feat-desc">Максимальное освещение и отключение тумана на всей карте.</div></div></div>
+    <div class="feat-card"><div class="feat-icon">🔕</div><div class="feat-body"><div class="feat-name">Anti-AFK + Fake Lag</div><div class="feat-desc">Защита от AFK-кика и имитация лагов.</div></div></div>
+    <div class="feat-card"><div class="feat-icon">🎒</div><div class="feat-body"><div class="feat-name">Give All Tools</div><div class="feat-desc">Копирует все инструменты в инвентарь.</div></div></div>
+    <div class="feat-card"><div class="feat-icon">🌈</div><div class="feat-body"><div class="feat-name">RGB Mode + Смена неба</div><div class="feat-desc">Переливающийся персонаж и 8 вариантов неба.</div></div></div>
+    <div class="feat-card"><div class="feat-icon">🚫</div><div class="feat-body"><div class="feat-name">Fake Ban (прикол)</div><div class="feat-desc">Фейковый экран бана для выбранного игрока.</div></div></div>
+    <div class="feat-card"><div class="feat-icon">📱</div><div class="feat-body"><div class="feat-name">Mobile Ready</div><div class="feat-desc">Адаптирован под телефоны. Samsung A16, Touch ClickTP.</div></div></div>
+  </div>
 
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+  <!-- HOW TO USE -->
+  <div class="sec-title">Как использовать</div>
+  <div class="steps">
+    <div class="step"><div class="step-num">1</div><div class="step-text">Получи ключ в боте @ShaikhulovHUB_Bot</div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-text">Открой Roblox и зайди в любую игру</div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-text">Запусти эксплойт (Fluxus, Delta, Solara, Hydrogen)</div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-text">Скопируй loadstring и вставь в эксплойт</div></div>
+  </div>
 
-    let animationFrameId: number;
-    let particles: Particle[] = [];
+  <!-- FOOTER -->
+  <footer>
+    <div>© 2025 <strong>SHAIKHULOV HUB</strong> | Создатель: <strong>YZHE_STARUY</strong></div>
+    <div style="margin-top:8px;">Telegram: <strong>@ShaikhulovHUB_Bot</strong> | v3.1 | Mobile Ready</div>
+    <div style="margin-top:6px;font-size:.72rem;">Только для образовательных целей. Используй на свой страх и риск.</div>
+  </footer>
 
-    const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
+</div>
 
-    const createParticles = () => {
-      particles = [];
-      const count = Math.floor((canvas.width * canvas.height) / 15000);
-      for (let i = 0; i < count; i++)
-        particles.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height,
-          vx: (Math.random() - 0.5) * 0.5, vy: (Math.random() - 0.5) * 0.5 });
-    };
+<div class="toast" id="toast">✅ Скопировано!</div>
 
-    const draw = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x, dy = particles[i].y - particles[j].y;
-          const d = Math.sqrt(dx*dx + dy*dy);
-          if (d < 150) {
-            ctx.beginPath(); ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = 'rgba(0,120,255,0.15)';
-            ctx.globalAlpha = (150 - d) / 150 * 0.5;
-            ctx.lineWidth = 1; ctx.stroke(); ctx.globalAlpha = 1;
-          }
+<script>
+  // ── COPY ──
+  function copyLS() {
+    const text = document.getElementById('ls-text').textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = document.getElementById('copyBtn');
+      btn.classList.add('copied');
+      btn.innerHTML = '<span>✅</span> СКОПИРОВАНО';
+      const t = document.getElementById('toast');
+      t.classList.add('show');
+      setTimeout(() => { t.classList.remove('show'); btn.classList.remove('copied'); btn.innerHTML = '<span>📋</span> КОПИРОВАТЬ'; }, 2000);
+    });
+  }
+
+  // ── PARTICLE BACKGROUND ──
+  const canvas = document.getElementById('bg-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, particles = [];
+
+  function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+  window.addEventListener('resize', resize);
+  resize();
+
+  class Particle {
+    constructor() { this.reset(); }
+    reset() { this.x = Math.random() * W; this.y = Math.random() * H; this.r = Math.random() * 1.4 + .3; this.vx = (Math.random() - .5) * .35; this.vy = (Math.random() - .5) * .35; this.a = Math.random() * .5 + .1; }
+    update() { this.x += this.vx; this.y += this.vy; if (this.x < 0 || this.x > W || this.y < 0 || this.y > H) this.reset(); }
+    draw() { ctx.beginPath(); ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2); ctx.fillStyle = `rgba(0,120,255,${this.a})`; ctx.fill(); }
+  }
+
+  for (let i = 0; i < 100; i++) particles.push(new Particle());
+
+  function drawLines() {
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x, dy = particles[i].y - particles[j].y;
+        const d = Math.sqrt(dx*dx + dy*dy);
+        if (d < 120) {
+          ctx.beginPath(); ctx.moveTo(particles[i].x, particles[i].y); ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = `rgba(0,120,255,${.12 * (1 - d/120)})`; ctx.lineWidth = .6; ctx.stroke();
         }
       }
-      particles.forEach(p => {
-        ctx.beginPath(); ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(0,212,255,0.8)';
-        ctx.shadowBlur = 10; ctx.shadowColor = 'rgba(0,212,255,0.8)';
-        ctx.fill(); ctx.shadowBlur = 0;
-      });
-    };
-
-    const update = () => particles.forEach(p => {
-      p.x += p.vx; p.y += p.vy;
-      if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-      if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-    });
-
-    const animate = () => { update(); draw(); animationFrameId = requestAnimationFrame(animate); };
-
-    resize(); createParticles(); animate();
-    window.addEventListener('resize', () => { resize(); createParticles(); });
-    return () => cancelAnimationFrame(animationFrameId);
-  }, []);
-
-  return <canvas ref={canvasRef} className="fixed inset-0 pointer-events-none z-0" style={{ opacity: 0.4 }} />;
-}
-    import { motion } from 'framer-motion';
-import { ReactNode } from 'react';
-
-interface GlowCardProps { children: ReactNode; className?: string; delay?: number; }
-
-export function GlowCard({ children, className = '', delay = 0 }: GlowCardProps) {
-  return (
-    <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }} transition={{ duration: 0.5, delay }}
-      className={`relative group ${className}`}>
-      <div className="absolute -inset-0.5 bg-gradient-to-r from-primary via-accent to-primary rounded-lg opacity-0 group-hover:opacity-100 blur transition-opacity duration-500" />
-      <div className="relative bg-card border border-border rounded-lg p-6 h-full transition-all duration-300 group-hover:border-primary/50">
-        {children}
-      </div>
-    </motion.div>
-  );
-}
-    import { useState } from 'react';
-import { Check, Copy } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
-
-export function CopyButton({ text, className = '' }: { text: string; className?: string }) {
-  const [copied, setCopied] = useState(false);
-  const { toast } = useToast();
-
-  const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopied(true);
-      toast({ title: '✅ Скопировано!', description: 'Loadstring скопирован в буфер обмена', duration: 2000 });
-      setTimeout(() => setCopied(false), 2000);
-    } catch {
-      toast({ title: '❌ Ошибка', description: 'Не удалось скопировать', variant: 'destructive', duration: 2000 });
     }
-  };
+  }
 
-  return (
-    <button onClick={handleCopy}
-      className={`inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-lg font-semibold transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-primary/50 ${copied ? 'bg-green-600' : ''} ${className}`}>
-      {copied ? <Check className="w-5 h-5" /> : <Copy className="w-5 h-5" />}
-      {copied ? 'Скопировано!' : 'Скопировать'}
-    </button>
-  );
-}
-        import { useEffect, useState, useRef } from 'react';
-import { motion } from 'framer-motion';
-
-interface Props { end: number; label: string; suffix?: string; duration?: number; }
-
-export function StatsCounter({ end, label, suffix = '', duration = 2000 }: Props) {
-  const [count, setCount] = useState(0);
-  const [animated, setAnimated] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting && !animated) {
-        setAnimated(true);
-        const start = Date.now();
-        const tick = () => {
-          const progress = Math.min((Date.now() - start) / duration, 1);
-          setCount(Math.floor((1 - Math.pow(1 - progress, 4)) * end));
-          if (progress < 1) requestAnimationFrame(tick);
-        };
-        tick();
-      }
-    }, { threshold: 0.5 });
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, [end, duration, animated]);
-
-  return (
-    <motion.div ref={ref} initial={{ opacity: 0, scale: 0.5 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} className="text-center">
-      <div className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent animate-gradient">
-        {count}{suffix}
-      </div>
-      <div className="text-muted-foreground mt-2 text-sm md:text-base">{label}</div>
-    </motion.div>
-  );
-}
+  function loop() { ctx.clearRect(0, 0, W, H); particles.forEach(p => { p.update(); p.draw(); }); drawLines(); requestAnimationFrame(loop); }
+  loop();
+</script>
+</body>
+</html>
