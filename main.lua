@@ -1,5 +1,5 @@
 -- 🔷 SHAIKHULOV HUB - YZHE_STARUY Edition
--- Aimbot + Chams (Universal) + ESP Colors (MM2)
+-- Aimbot + Chams + ESP Colors + Vega X Fling + Old Tools
 
 local player = game.Players.LocalPlayer
 local camera = workspace.CurrentCamera
@@ -113,7 +113,7 @@ local F = {
     Noclip = {on = false},
     ClickTP = {on = false},
     RGB = {on = false},
-    ESP = {on = true}, -- Для MM2 (цветная обводка)
+    ESP = {on = true},
     FlingMurder = {on = false},
     GunTP = {on = false},
     Sky = "Default",
@@ -324,7 +324,7 @@ local function GetRole(plr)
     return "👤 Мирный", C.IW
 end
 
--- ===== CHAMS (Универсальная обводка) =====
+-- ===== CHAMS =====
 local function UpdateChams()
     for plr, hl in pairs(F.Chams.obj) do
         if not plr.Character or not hl.Parent then hl:Destroy(); F.Chams.obj[plr]=nil; continue end
@@ -372,6 +372,22 @@ local function GetClosestInFOV()
     return closest
 end
 
+-- ===== GIVE TOOLS (СТАРАЯ ВЕРСИЯ) =====
+local function GiveTools()
+    local bp = player:FindFirstChild("Backpack")
+    if bp then
+        local storageSources = {game:GetService("ReplicatedStorage"), game:GetService("Lighting")}
+        for _, source in pairs(storageSources) do
+            for _, obj in pairs(source:GetDescendants()) do
+                if obj:IsA("Tool") or obj:IsA("HopperBin") then
+                    local clone = obj:Clone()
+                    clone.Parent = bp
+                end
+            end
+        end
+    end
+end
+
 -- ===== GUN TP =====
 local function GunTP()
     local ch = player.Character; if not ch then return end
@@ -382,18 +398,6 @@ local function GunTP()
             if h and obj.Parent ~= player.Backpack then local old = hrp.CFrame; hrp.CFrame = h.CFrame; task.wait(0.1); obj.Parent = player.Backpack; task.wait(0.1); hrp.CFrame = old; return end
         end
     end
-end
-
--- ===== GIVE TOOLS =====
-local function GiveTools()
-    local bp = player:FindFirstChild("Backpack"); if not bp then return 0 end
-    local n = 0
-    for _, src in pairs({game.ReplicatedStorage, game.Lighting, game.ServerStorage, workspace}) do
-        for _, obj in pairs(src:GetDescendants()) do
-            if (obj:IsA("Tool") or obj:IsA("HopperBin")) and not bp:FindFirstChild(obj.Name) then obj:Clone().Parent = bp; n += 1 end
-        end
-    end
-    return n
 end
 
 -- ===== AUTO BUILD =====
@@ -449,7 +453,7 @@ function Update()
         Btn("📍 Click TP: " .. (F.ClickTP.on and "ON" or "OFF"), function() F.ClickTP.on=not F.ClickTP.on; Update() end)
         Btn("🌈 RGB: " .. (F.RGB.on and "ON" or "OFF"), function() F.RGB.on=not F.RGB.on; Update() end)
         Btn("💥 Fling All: " .. (F.FlingAll.on and "ON" or "OFF"), function() F.FlingAll.on=not F.FlingAll.on; Update() end)
-        Btn("🎒 Give All Tools", function() Notify("✅ "..GiveTools().." инструментов!", C.Green) end)
+        Btn("🎒 Give All Tools", function() GiveTools(); Notify("✅ Инструменты скопированы!", C.Green) end)
         Label("Сила флинга: "..F.FlingPower, C.Text)
         local inp = Instance.new("TextBox"); inp.Size = UDim2.new(1, -4, 0, 22); inp.Text = tostring(F.FlingPower); inp.TextColor3 = C.White; inp.BackgroundColor3 = C.Frame2; inp.Font = Enum.Font.Gotham; inp.TextSize = 10; inp.Parent = Scroll; Instance.new("UICorner", inp).CornerRadius = UDim.new(0, 4)
         inp.FocusLost:Connect(function() local v=tonumber(inp.Text); if v and v>0 then F.FlingPower=v; Update() end end)
@@ -496,42 +500,24 @@ end
 
 -- ===== ЦИКЛЫ =====
 RunService.RenderStepped:Connect(function()
-    -- Chams update
     UpdateChams()
-    
-    -- FOV Circle
     if F.Aimbot.on and F.Aimbot.showFov then
-        FovCircle.Visible = true
-        FovCircle.Radius = F.Aimbot.fov
-        FovCircle.Position = UIS:GetMouseLocation()
-    else
-        FovCircle.Visible = false
-    end
-    
-    -- Create Chams for new players
+        FovCircle.Visible = true; FovCircle.Radius = F.Aimbot.fov; FovCircle.Position = UIS:GetMouseLocation()
+    else FovCircle.Visible = false end
     for _, p in pairs(Players:GetPlayers()) do
-        if p ~= player and p.Character then
-            if not F.Chams.obj[p] then CreateChams(p) end
-        end
+        if p ~= player and p.Character then if not F.Chams.obj[p] then CreateChams(p) end end
     end
 end)
 
 RunService.Heartbeat:Connect(function()
     local ch = player.Character; if not ch then return end
     local hm = ch:FindFirstChildOfClass("Humanoid")
-    
-    -- Aimbot
-    if F.Aimbot.on then
-        local target = GetClosestInFOV()
-        if target then camera.CFrame = CFrame.new(camera.CFrame.Position, target.Position) end
-    end
-    
+    if F.Aimbot.on then local target = GetClosestInFOV(); if target then camera.CFrame = CFrame.new(camera.CFrame.Position, target.Position) end end
     if F.InfJump.on and hm then hm.JumpPower=50 end
     if F.Noclip.on then for _, p in pairs(ch:GetChildren()) do if p:IsA("BasePart") then p.CanCollide=false end end end
     if F.Speed.on and hm then hm.WalkSpeed=F.Speed.val end
     if F.RGB.on then local clr=Color3.fromHSV((tick()*200)%255/255,1,1); for _, p in pairs(ch:GetChildren()) do if p:IsA("BasePart") then p.Color=clr end end end
     if F.FlingAll.on then for _, p in pairs(Players:GetPlayers()) do if p~=player then VegaFling(p) end end end
-    
     if F.FlingMurder.on and isMM2 then
         local hrp = ch:FindFirstChild("HumanoidRootPart")
         if hrp then for _, p in pairs(Players:GetPlayers()) do if p~=player and p.Character then local th=p.Character:FindFirstChild("HumanoidRootPart")
@@ -559,7 +545,6 @@ Players.PlayerRemoving:Connect(function(p)
     MurdererMemory[p.Name]=nil; SheriffMemory[p.Name]=nil
 end)
 
--- Init
 for _, p in pairs(Players:GetPlayers()) do
     if p ~= player and p.Character then CreateChams(p) end
     if p ~= player then p.CharacterAdded:Connect(function() task.wait(0.5); CreateChams(p) end) end
@@ -567,4 +552,4 @@ end
 
 Update()
 print("🔷 SHAIKHULOV HUB - YZHE_STARUY")
-print("🎯 Aimbot + Chams + ESP Colors")
+print("✅ OLD TOOLS | Aimbot | Chams | Vega X Fling")
