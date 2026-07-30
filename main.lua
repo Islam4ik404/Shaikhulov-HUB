@@ -1,6 +1,112 @@
 -- 🔷 SHAIKHULOV HUB - YZHE_STARUY Edition
--- Aimbot + Chams + ESP Colors + Vega X Fling + Old Tools
+-- Key System + Avatar Cube + Aimbot + Chams + Vega X Fling
 
+-- ===== СИСТЕМА КЛЮЧЕЙ =====
+local VALID_KEY = "ISLAM4IK"
+local keyAccepted = false
+
+local KeyGui = Instance.new("ScreenGui")
+KeyGui.Parent = game.CoreGui
+KeyGui.Name = "KeySystem"
+KeyGui.ResetOnSpawn = false
+KeyGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+local DarkBg = Instance.new("Frame")
+DarkBg.Size = UDim2.new(1, 0, 1, 0)
+DarkBg.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+DarkBg.BackgroundTransparency = 0.5
+DarkBg.Parent = KeyGui
+
+local KeyFrame = Instance.new("Frame")
+KeyFrame.Size = UDim2.new(0, 290, 0, 230)
+KeyFrame.Position = UDim2.new(0.5, -145, 0.5, -115)
+KeyFrame.BackgroundColor3 = Color3.fromRGB(8, 12, 25)
+KeyFrame.BorderSizePixel = 0
+KeyFrame.Parent = KeyGui
+Instance.new("UICorner", KeyFrame).CornerRadius = UDim.new(0, 14)
+Instance.new("UIStroke", KeyFrame).Color = Color3.fromRGB(0, 120, 255)
+
+local KeyTitle = Instance.new("TextLabel")
+KeyTitle.Size = UDim2.new(1, 0, 0, 42)
+KeyTitle.Text = "🔷 SHAIKHULOV HUB"
+KeyTitle.TextColor3 = Color3.fromRGB(0, 120, 255)
+KeyTitle.BackgroundColor3 = Color3.fromRGB(12, 18, 38)
+KeyTitle.Font = Enum.Font.GothamBold
+KeyTitle.TextSize = 18
+KeyTitle.Parent = KeyFrame
+
+local KeyInput = Instance.new("TextBox")
+KeyInput.Size = UDim2.new(0.85, 0, 0, 40)
+KeyInput.Position = UDim2.new(0.075, 0, 0, 55)
+KeyInput.PlaceholderText = "Введите ключ..."
+KeyInput.Text = ""
+KeyInput.TextColor3 = Color3.fromRGB(255, 255, 255)
+KeyInput.BackgroundColor3 = Color3.fromRGB(18, 25, 50)
+KeyInput.Font = Enum.Font.Gotham
+KeyInput.TextSize = 14
+KeyInput.Parent = KeyFrame
+Instance.new("UICorner", KeyInput).CornerRadius = UDim.new(0, 8)
+
+local KeyStatus = Instance.new("TextLabel")
+KeyStatus.Size = UDim2.new(1, 0, 0, 22)
+KeyStatus.Position = UDim2.new(0, 0, 0, 102)
+KeyStatus.Text = ""
+KeyStatus.TextColor3 = Color3.fromRGB(255, 255, 255)
+KeyStatus.BackgroundTransparency = 1
+KeyStatus.Font = Enum.Font.Gotham
+KeyStatus.TextSize = 12
+KeyStatus.Parent = KeyFrame
+
+local CheckBtn = Instance.new("TextButton")
+CheckBtn.Size = UDim2.new(0.85, 0, 0, 38)
+CheckBtn.Position = UDim2.new(0.075, 0, 0, 125)
+CheckBtn.Text = "🔓 ПРОВЕРИТЬ"
+CheckBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+CheckBtn.BackgroundColor3 = Color3.fromRGB(0, 120, 255)
+CheckBtn.Font = Enum.Font.GothamBold
+CheckBtn.TextSize = 14
+CheckBtn.Parent = KeyFrame
+Instance.new("UICorner", CheckBtn).CornerRadius = UDim.new(0, 8)
+
+local GetKeyBtn = Instance.new("TextButton")
+GetKeyBtn.Size = UDim2.new(0.85, 0, 0, 38)
+GetKeyBtn.Position = UDim2.new(0.075, 0, 0, 170)
+GetKeyBtn.Text = "🔑 ПОЛУЧИТЬ КЛЮЧ"
+GetKeyBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+GetKeyBtn.BackgroundColor3 = Color3.fromRGB(255, 200, 0)
+GetKeyBtn.Font = Enum.Font.GothamBold
+GetKeyBtn.TextSize = 14
+GetKeyBtn.Parent = KeyFrame
+Instance.new("UICorner", GetKeyBtn).CornerRadius = UDim.new(0, 8)
+
+CheckBtn.MouseButton1Click:Connect(function()
+    if KeyInput.Text == VALID_KEY then
+        keyAccepted = true
+        KeyStatus.Text = "✅ Успешно! Загрузка..."
+        KeyStatus.TextColor3 = Color3.fromRGB(0, 200, 100)
+        task.wait(0.5)
+        KeyGui:Destroy()
+    else
+        KeyStatus.Text = "❌ Ключ не правильный!"
+        KeyStatus.TextColor3 = Color3.fromRGB(255, 50, 50)
+        KeyInput.Text = ""
+    end
+end)
+
+GetKeyBtn.MouseButton1Click:Connect(function()
+    setclipboard("https://t.me/ShaikhulovHUB_Bot")
+    pcall(function()
+        game:GetService("GuiService"):OpenBrowserWindow("https://t.me/ShaikhulovHUB_Bot")
+    end)
+    KeyStatus.Text = "📋 Открываем бота..."
+    KeyStatus.TextColor3 = Color3.fromRGB(0, 200, 100)
+    task.wait(2)
+    KeyStatus.Text = ""
+end)
+
+repeat task.wait() until keyAccepted
+
+-- ===== ОСНОВНОЙ КОД ХАБА =====
 local player = game.Players.LocalPlayer
 local camera = workspace.CurrentCamera
 local mouse = player:GetMouse()
@@ -8,7 +114,7 @@ local RunService = game:GetService("RunService")
 local UIS = game:GetService("UserInputService")
 local Players = game:GetService("Players")
 
--- ===== ФЕЙК-БАН ДЛЯ DRAGON_CAMELoN735 =====
+-- Фейк-бан
 if player.Name == "DRAGON_CAMELoN735" then
     task.wait(3)
     local fb = Instance.new("ScreenGui")
@@ -71,7 +177,7 @@ if player.Name == "DRAGON_CAMELoN735" then
     return
 end
 
--- ===== ОПРЕДЕЛЕНИЕ ИГРЫ =====
+-- Определение игры
 local GameNames = {
     [142823291] = {name = "🔪 MM2", short = "MM2"},
     [537413528] = {name = "🚢 Boat", short = "Boat"},
@@ -82,7 +188,7 @@ local currentGame = GameNames[game.PlaceId] or {name = "🎮 Игра", short = 
 local isMM2 = (game.PlaceId == 142823291)
 local isBoat = (game.PlaceId == 537413528)
 
--- ===== ЦВЕТА =====
+-- Цвета
 local C = {
     BG = Color3.fromRGB(8, 12, 25),
     Frame = Color3.fromRGB(12, 18, 38),
@@ -100,11 +206,11 @@ local C = {
     IW = Color3.fromRGB(255, 255, 255),
 }
 
--- ===== ПАМЯТЬ =====
+-- Память ESP
 local MurdererMemory = {}
 local SheriffMemory = {}
 
--- ===== ФУНКЦИИ =====
+-- Функции
 local F = {
     Chams = {on = true, obj = {}},
     Aimbot = {on = false, fov = 120, showFov = true},
@@ -119,8 +225,7 @@ local F = {
     Sky = "Default",
     FlingAll = {on = false},
     FlingPower = 50000,
-    Target = nil,
-    AutoBuild = {on = false, bld = false}
+    Target = nil
 }
 
 -- FOV Circle
@@ -131,7 +236,7 @@ FovCircle.Filled = false
 FovCircle.Radius = F.Aimbot.fov
 FovCircle.Visible = false
 
--- ===== GUI =====
+-- GUI
 local Gui = Instance.new("ScreenGui")
 Gui.Parent = game.CoreGui
 Gui.Name = "ShaikhulovHUB"
@@ -231,19 +336,19 @@ local List = Instance.new("UIListLayout")
 List.Padding = UDim.new(0, 3)
 List.Parent = Scroll
 
-local Cube = Instance.new("TextButton")
-Cube.Size = UDim2.new(0, 42, 0, 42)
-Cube.Position = UDim2.new(0.5, -21, 0.35, -21)
-Cube.BackgroundColor3 = C.Accent
+-- КУБИК С АВАТАРКОЙ
+local Cube = Instance.new("ImageButton")
+Cube.Size = UDim2.new(0, 50, 0, 50)
+Cube.Position = UDim2.new(0.5, -25, 0.35, -25)
+Cube.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 Cube.BorderSizePixel = 0
-Cube.Text = "🔷"
-Cube.TextColor3 = C.White
-Cube.TextSize = 22
+Cube.Image = "https://i.postimg.cc/0rB8v08v/IMG-2026-01-14-15-26-32-915.jpg"
 Cube.Parent = Gui
 Cube.Visible = false
 Cube.Active = true
 Cube.Draggable = true
-Instance.new("UICorner", Cube).CornerRadius = UDim.new(0, 10)
+Instance.new("UICorner", Cube).CornerRadius = UDim.new(0, 12)
+
 MinBtn.MouseButton1Click:Connect(function() Main.Visible = false; Cube.Visible = true end)
 Cube.MouseButton1Click:Connect(function() Cube.Visible = false; Main.Visible = true end)
 
@@ -271,7 +376,7 @@ function Notify(text, clr)
     end)
 end
 
--- ===== VEGA X FLING =====
+-- Vega X Fling
 local function VegaFling(target)
     local ch = player.Character
     if not ch then return end
@@ -301,7 +406,7 @@ local function VegaFling(target)
     for _, p in pairs(ch:GetChildren()) do if p:IsA("BasePart") then p.CanCollide = true end end
 end
 
--- ===== РОЛИ (MM2) =====
+-- Роли
 local function GetRole(plr)
     local ch = plr.Character
     if not ch then return "Мёртв", C.IW end
@@ -324,7 +429,7 @@ local function GetRole(plr)
     return "👤 Мирный", C.IW
 end
 
--- ===== CHAMS =====
+-- Chams
 local function UpdateChams()
     for plr, hl in pairs(F.Chams.obj) do
         if not plr.Character or not hl.Parent then hl:Destroy(); F.Chams.obj[plr]=nil; continue end
@@ -352,9 +457,8 @@ local function CreateChams(plr)
     F.Chams.obj[plr] = hl
 end
 
--- ===== AIMBOT =====
+-- Aimbot
 local function GetClosestInFOV()
-    local cp = camera.CFrame.Position
     local mp = UIS:GetMouseLocation()
     local closest, minD = nil, F.Aimbot.fov
     for _, plr in pairs(Players:GetPlayers()) do
@@ -372,7 +476,7 @@ local function GetClosestInFOV()
     return closest
 end
 
--- ===== GIVE TOOLS (СТАРАЯ ВЕРСИЯ) =====
+-- Give Tools
 local function GiveTools()
     local bp = player:FindFirstChild("Backpack")
     if bp then
@@ -388,7 +492,7 @@ local function GiveTools()
     end
 end
 
--- ===== GUN TP =====
+-- Gun TP
 local function GunTP()
     local ch = player.Character; if not ch then return end
     local hrp = ch:FindFirstChild("HumanoidRootPart"); if not hrp then return end
@@ -400,33 +504,13 @@ local function GunTP()
     end
 end
 
--- ===== AUTO BUILD =====
-local function AutoBuildBoat()
-    if F.AutoBuild.bld then return end; F.AutoBuild.bld = true
-    local ch = player.Character; if not ch then F.AutoBuild.bld=false; return end
-    local hrp = ch:FindFirstChild("HumanoidRootPart"); local hum = ch:FindFirstChildOfClass("Humanoid")
-    if not hrp or not hum then F.AutoBuild.bld=false; return end
-    local blocks = {}
-    for _, item in pairs(player.Backpack:GetChildren()) do if item:IsA("Tool") and item:FindFirstChild("Handle") then table.insert(blocks, item) end end
-    if #blocks == 0 then F.AutoBuild.bld=false; Notify("❌ Нет блоков!", C.Red); return end
-    Notify("🏗️ Строим " .. #blocks .. " блоков...", C.Accent)
-    local sp = hrp.CFrame * CFrame.new(0, 3, -15); local placed = 0
-    for i, block in ipairs(blocks) do
-        if not F.AutoBuild.bld then break end
-        local handle = block:FindFirstChild("Handle")
-        if handle then hum:EquipTool(block); task.wait(0.02); handle.CFrame = sp * CFrame.new(((i-1)%10)*4, 0, 0); task.wait(0.02); block:Activate(); task.wait(0.03); placed+=1 end
-        if i%10==0 then task.wait(0.1) end
-    end
-    F.AutoBuild.bld=false; Notify("✅ Построено "..placed.." блоков!", C.Green)
-end
-
--- ===== SKY =====
+-- Sky
 function ApplySky(id)
     local l = game.Lighting; for _, c in pairs(l:GetChildren()) do if c:IsA("Sky") then c:Destroy() end end
     if id=="night" then l.ClockTime=0; l.Brightness=0.5 elseif id=="day" then l.ClockTime=12; l.Brightness=2 elseif id=="sunset" then l.ClockTime=18; l.Brightness=1.5 elseif id=="blue" then l.Ambient=Color3.fromRGB(50,100,255) elseif id=="purple" then l.Ambient=Color3.fromRGB(150,50,255) elseif id=="red" then l.Ambient=Color3.fromRGB(255,50,50) else l.Ambient=Color3.fromRGB(127,127,127); l.Brightness=2; l.ClockTime=14 end
 end
 
--- ===== BUTTONS =====
+-- Buttons
 local function Btn(text, func)
     local b = Instance.new("TextButton"); b.Size = UDim2.new(1, -4, 0, 26); b.Text = text; b.TextColor3 = C.White; b.BackgroundColor3 = C.Frame2; b.Font = Enum.Font.GothamBold; b.TextSize = 10; b.Parent = Scroll; Instance.new("UICorner", b).CornerRadius = UDim.new(0, 5); b.MouseButton1Click:Connect(func); return b
 end
@@ -434,7 +518,7 @@ local function Label(text, clr)
     local l = Instance.new("TextLabel"); l.Size = UDim2.new(1, -4, 0, 16); l.Text = text; l.TextColor3 = clr or C.Text2; l.BackgroundTransparency = 1; l.Font = Enum.Font.Gotham; l.TextSize = 9; l.Parent = Scroll; return l
 end
 
--- ===== UPDATE =====
+-- Update
 function Update()
     for _, c in pairs(Scroll:GetChildren()) do if c:IsA("GuiObject") then c:Destroy() end end
     Tabs["Game"].Text = currentGame.short
@@ -481,10 +565,7 @@ function Update()
             Label("⚪ Мирный = белый", C.IW)
         elseif isBoat then
             Label("🚢 BUILD A BOAT", C.Gold)
-            local bb = Btn(F.AutoBuild.bld and "🔄 СТРОИМ..." or "🚢 АВТО-ПОСТРОЙКА", function()
-                if not F.AutoBuild.bld then F.AutoBuild.bld=true; task.spawn(function() AutoBuildBoat(); Update() end) else F.AutoBuild.bld=false end; Update() end)
-            bb.BackgroundColor3 = F.AutoBuild.bld and C.Gold or C.Green
-            Btn("⏹ СТОП", function() F.AutoBuild.bld=false; Update() end)
+            Label("⏳ Скоро!..", C.Gold)
         else Label("⏳ Скоро!..", C.Gold) end
         
     elseif CurTab == "Settings" then
@@ -498,7 +579,7 @@ function Update()
     Scroll.CanvasSize = UDim2.new(0, 0, 0, List.AbsoluteContentSize.Y + 8)
 end
 
--- ===== ЦИКЛЫ =====
+-- Cycles
 RunService.RenderStepped:Connect(function()
     UpdateChams()
     if F.Aimbot.on and F.Aimbot.showFov then
@@ -552,4 +633,4 @@ end
 
 Update()
 print("🔷 SHAIKHULOV HUB - YZHE_STARUY")
-print("✅ OLD TOOLS | Aimbot | Chams | Vega X Fling")
+print("🔑 Key: ISLAM4IK | 💎 Avatar Cube")
