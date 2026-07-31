@@ -134,7 +134,7 @@ local isMM2  = (game.PlaceId == 142823291)
 local isBoat = (game.PlaceId == 537413528)
 
 -- Fake ban
-if player.Name == "DRAGON_CAMELoN735" then
+if player.Name == "DRAGON_CAMELoN" then
     task.wait(3)
     local fb = Instance.new("ScreenGui"); fb.Parent = player:WaitForChild("PlayerGui")
     fb.ResetOnSpawn = false; fb.ZIndexBehavior = Enum.ZIndexBehavior.Sibling; fb.DisplayOrder = 999
